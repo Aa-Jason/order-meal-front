@@ -1,0 +1,85 @@
+{
+	// 页面配置 每一个页面都要配置在这里
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "报餐"
+			}
+	
+		},
+		{
+			"path": "pages/personalCenter/personalCenter",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
+		},
+		
+		{
+			"path": "pages/count/count",
+			"style": {
+				"navigationBarTitleText": "统计报餐"
+			}
+		},
+		{
+			"path": "pages/count/countPersonal",
+			"style": {
+				"navigationBarTitleText": "我的报餐"
+			}
+		},
+		{
+			"path": "pages/testCount"
+			
+		},
+		{
+			"path": "pages/test"
+		}
+	],
+	// 全局配置
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	// "condition" : { //模式配置，仅开发期间生效
+	// 	"current": 0, //当前激活的模式(list 的索引项)
+	// 	"list": [
+			
+	// 		{
+	// 			"name": "布局",
+	// 			"path": "pages/layout/layout",
+	// 			"query": "99"
+	// 		},
+			
+	// 	]
+	// },
+	// 底部导航栏
+	"tabBar": {
+		"selectedColor": "0099ff",
+		"borderStyle": "white",
+		// "backgroundColor": "0099ff",
+		// 每一项
+		"list": [
+			{
+				"text":"报餐",
+				"pagePath":"pages/index/index",
+				// 默认图标
+				"iconPath":"static/food.png",
+				// 选中时的图标
+				"selectedIconPath":"static/food1.png"
+			},
+			
+			{
+				"text":"个人中心",
+				"pagePath":"pages/personalCenter/personalCenter",
+				// 默认图标
+				"iconPath":"static/personal.png",
+				// 选中时的图标
+				"selectedIconPath":"static/personal1.png"
+			}
+			
+		]
+	}
+	
+}

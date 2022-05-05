@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "moment": "^2.29.3"
+  },
+  "dependencies": {
+    "element-ui": "^2.15.8"
+  }
+}
