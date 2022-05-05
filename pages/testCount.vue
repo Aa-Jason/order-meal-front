@@ -124,6 +124,14 @@
 					// 		// 成功请求到的数据
 					// 	}
 					// })
+					// h5和小程序要分开配置 因为小程序不存在跨域问题
+					// //#ifndef H5
+					// Vue.prototype.$url = 'http://xx.xx.xx.xx:xx'
+					// //#endif
+					 
+					// //#ifdef H5
+					// Vue.prototype.$url = '/api'
+					// //#endif
 					// 显示查询的结果
 					this.showSum = true
 				}
