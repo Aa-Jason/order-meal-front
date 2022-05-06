@@ -22,7 +22,7 @@
 			}
 		},
 		{
-			"path": "pages/count/countPersonal",
+			"path": "pages/countPersonal/countPersonal",
 			"style": {
 				"navigationBarTitleText": "我的报餐"
 			}
@@ -32,7 +32,7 @@
 			
 		},
 		{
-			"path": "pages/test"
+			"path": "pages/register"
 		},
 		{
 			"path": "pages/login"

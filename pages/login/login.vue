@@ -38,18 +38,18 @@
 		},
 		methods:{
 			goLogin(){
-				uni.request({
-					url:'',
-					data:{
-						mobile:this.mobile,
-						password:this.password,
-					},
-					success:(res)=>{
-						wx.setStorageSync('token',res.data.token)
-						wx.setStorage('name',res.data.name)
-					}
-				})
-				wx.setStorageSync('token','123')
+				// uni.request({
+				// 	url:'',
+				// 	data:{
+				// 		mobile:this.mobile,
+				// 		password:this.password,
+				// 	},
+				// 	success:(res)=>{
+				// 		wx.setStorageSync('token',res.data.token)
+				// 		wx.setStorage('name',res.data.name)
+				// 	}
+				// })
+				wx.setStorageSync('token','lmk')
 				// 登录成功之后返回登录页面
 				uni.switchTab({
 					url:"/pages/personalCenter/personalCenter",

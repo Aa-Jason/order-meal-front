@@ -1,5 +1,11 @@
 <template>
   <div class="register-container">
+    
+	<view>
+		<!-- <view class="d-flex a-center j-sb py-2 px-3 text-light-muted" >
+			<view class="iconfont icon-shanchu1" ></view>
+			<view class="font-md" >忘记密码</view>
+		</view> -->
 		<view class="p-5" style="margin: 50rpx;">
 			<view class="font-big mb-5" style="font-size: 60rpx;">注册新用户</view>
 			
@@ -8,11 +14,20 @@
 			placeholder-class="text-light-muted" 
 			style="border-bottom:1rpx solid #D3D3D3 ;margin: 50rpx 0;padding-bottom: 20rpx;"
 			/>
+      <view class="uni-form-item uni-column">
+      <picker @change="bindPickerChange":range="array" style="border-bottom:1rpx solid #D3D3D3 ;margin: 50rpx 0;padding-bottom: 20rpx;">
+		  <label style="font-size: 17px;color: gray;">请选择你的部门：</label>
+		  <label  style="display: flex;">{{departmentId}}</label>
+      </picker>
+      
+      </view>
+
 			
-			<picker @change="bindPickerChange":range="array" style="border-bottom:1rpx solid #D3D3D3 ;margin: 50rpx 0;padding-bottom: 20rpx;">
-			  <label style="font-size: 17px;color: gray;">请选择你的部门：</label>
-			  <label  style="display: flex;">{{departmentId}}</label>
-			</picker>
+		<!-- 	<input type="text" class="border-bottom mb-4 uni-input px-0"
+			placeholder="请选择你的部门" v-model="departmentId"
+			placeholder-class="text-light-muted" 
+			style="border-bottom:1rpx solid #D3D3D3 ;margin: 50rpx 0;padding-bottom: 20rpx;"
+			/> -->
 			
 			<input type="text" class="border-bottom mb-4 uni-input px-0"
 			placeholder="请输入你的手机号" v-model="mobile"
@@ -43,8 +58,8 @@
         // 验证码
         password:'',
         nickname:'',
-		departmentId:'--请选择--',
-		array:['--请选择--','部门一','部门二','部门三']
+        departmentId:'--请选择--',
+        array:['--请选择--','部门一','部门二','部门三']
       }
 	  
     },

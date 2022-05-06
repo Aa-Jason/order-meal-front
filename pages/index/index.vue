@@ -317,7 +317,7 @@
 				let tabledate = []
 				for (let i = 0;i < 7;i++){
 					let data = {
-						data:this.dateTable2[i].date,
+						data:this.year + '-' + this.dateTable2[i].date,
 						breakfast:this.dateTable2[i].breakfast==true?1:0,
 						lunch:this.dateTable2[i].lunch==true?1:0,
 						dinner:this.dateTable2[i].lunch==true?1:0
@@ -338,8 +338,6 @@
 					.add(2 - num, 'days')
 			}
 			
-
-
 		},
 		watch: {
 			// value2发生改变时重新获取日期
@@ -435,6 +433,29 @@
 				this.value2 = this.$moment(this.value2)
 					.subtract(7, "days").toDate()
 				this.getDate1()
+				uni.request({
+					url:"",
+					data:{
+						startDay:this.year + '-' + this.dateTable2[0].date,
+						endDay:this.year + '-' + this.dateTable2[6].date
+					},
+					success: (res) => {
+						for (let i = 0;i<7;i++){
+							if(res.data[i].date!==null){
+								this.dateTable2[i].breakfast = res.data[i].breakfast == 1?true:false
+								this.dateTable2[i].lunch = res.data[i].lunch == 1?true:false
+								this.dateTable2[i].dinner = res.data[i].dinner == 1?true:false
+								
+							}else{
+								this.dateTable2[i].breakfast = false
+								this.dateTable2[i].lunch = false
+								this.dateTable2[i].dinner = false
+							}
+						}
+						
+					}
+				})
+				
 				// 向服务器请求上一周的早午晚餐数据
 				// 要判断一下数据库返回的数组是不是空的
 				// 如果是空的要置空
@@ -453,13 +474,50 @@
 				this.value2 = this.$moment(this.value2)
 					.add(7, "days").toDate()
 				this.getDate1()
+				uni.request({
+					url:"",
+					data:{
+						startDay:this.year + '-' + this.dateTable2[0].date,
+						endDay:this.year + '-' + this.dateTable2[6].date
+					},
+					success: (res) => {
+						for (let i = 0;i<7;i++){
+							if(res.data[i].date!==null){
+								this.dateTable2[i].breakfast = res.data[i].breakfast == 1?true:false
+								this.dateTable2[i].lunch = res.data[i].lunch == 1?true:false
+								this.dateTable2[i].dinner = res.data[i].dinner == 1?true:false
+								
+							}else{
+								this.dateTable2[i].breakfast = false
+								this.dateTable2[i].lunch = false
+								this.dateTable2[i].dinner = false
+							}
+						}
+						
+					}
+				})
 
 			},
 			orderMeal() {
 				// 提交报餐数据到数据库(this.tableDate)
 				// 要查询一下用户是否登录
+				let token = (wx.getStorageSync('token'))
+				if(token.length > 1){
+					uni.request({
+						url:"",
+						data:this.tableDate1,
+						success: (res) => {
+							alert('提交成功')
+						}
+					})
+				}else{
+					uni.navigateTo({
+						url:"/pages/login/login"
+					})
+				}
 				
-				console.log(this.dateTable2,this.tableDate1)
+				
+				// console.log(this.dateTable2,this.tableDate1)
 				
 				
 			},

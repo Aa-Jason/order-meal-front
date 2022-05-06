@@ -31,16 +31,16 @@
 				
 				<view v-for="(everyDay,index) in dataTable" :key="index" class="text">
 					<text class="item">
-						{{everyDay[0]}}
+						{{everyDay.date}}
 					</text >
 					<text class="item1">
-						{{everyDay[1]}}
+						{{everyDay.breakfast}}
 					</text>
 					<text class="item1">
-						{{everyDay[2]}}
+						{{everyDay.lunch}}
 					</text>
 					<text class="item1">
-						{{everyDay[3]}}
+						{{everyDay.dinner}}
 					</text>
 				</view>
 				
@@ -67,31 +67,10 @@
 					showPickerDate:false,
 					startDate: '',
 					endDate: '',
-					selectDate:'请选择查询范围',
-					breakfastSum:0,
-					lunchSum:0,
-					dinnerSum:0,
+					selectDate:'请选择查询时间范围',
+					
 					showSum:false,
-					dataTable:[
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						
-					]
+					dataTable:[]
 				}
 			},
 			onLoad() {},
@@ -115,6 +94,7 @@
 				cancel() {},
 				selected(){
 					// 传要查询的日期过去
+					this.dataTable = []
 					console.log(this.startDate,this.endDate)
 					// 得到后台返回的数据 并给data里的数据赋值
 					//#ifndef H5
@@ -127,10 +107,25 @@
 					uni.request({
 						url:url,
 						method:"GET",
+						data:{
+							startDate:this.startDate,
+							endDate:this.endDate
+						},
 						success(res){
 							// 成功请求到的数据
+							for (let i =0;i<res.data.length;i++){
+								if(res.data[i].data !== null){
+									var everyday={}
+									everyday.data = res.data[i].data
+									everyday.breakfast = res.data[i].breakfast
+									everyday.lunch = res.data[i].lunch
+									everyday.dinner = res.data[i].dinner
+								}
+								this.dataTable.push(everyday)
+							}
 						}
 					})
+					
 					// 显示查询的结果
 					this.showSum = true
 				}

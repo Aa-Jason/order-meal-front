@@ -47,7 +47,7 @@
 				})
 			},
 			goRegister(){
-				console.log(1111)
+				
 				uni.navigateTo({
 					url:"/pages/register/register"
 				})

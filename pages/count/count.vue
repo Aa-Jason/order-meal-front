@@ -9,7 +9,7 @@
 				<input  placeholder-class="name" placeholder="请输入查询姓名" type="text" 
 				v-model="name" 
 				style="color: #FFFFFF;text-align:center;font-size:29rpx;width: 70%;border-radius:20px; background: #5B57FC;height: 80rpx;margin-left: 10rpx;padding-left: -10rpx;" >
-				<button class = "select" @click="selected">查询</button>
+				<button class = "select" @click="selected">统计</button>
 			</view>
 			<mx-date-picker :show="showPickerDate" type='range' :show-tips="true"
 			 @confirm="onSelected" @cancel="onSelected" />
@@ -49,7 +49,7 @@
 				
 				
 			</view>
-			<button style="width: 250rpx;margin-left: 60%;background-color: #0099ff;color: #FFFFFF;margin-bottom: 20rpx;font-size:29rpx;">
+			<button v-if="showSum" style="width: 250rpx;margin-left: 60%;background-color: #0099ff;color: #FFFFFF;margin-bottom: 20rpx;font-size:29rpx;">
 				导出表格
 			</button>
 		</view>
@@ -70,32 +70,10 @@
 					showPickerDate:false,
 					startDate: '',
 					endDate: '',
-					selectDate:'请选择查询范围',
-					breakfastSum:0,
-					lunchSum:0,
-					dinnerSum:0,
-					showSum:true,
+					selectDate:'请选择统计时间范围',
+					showSum:false,
 					name:'',
-					dataTable:[
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						['04-01',8,8,8],
-						
-					]
+					dataTable:[]
 				}
 			},
 			onLoad() {},
@@ -119,23 +97,40 @@
 				cancel() {},
 				selected(){
 					// 传要查询的日期过去
+					
+					this.dataTable = []
 					console.log(this.startDate,this.endDate)
 					// 得到后台返回的数据 并给data里的数据赋值
-					// uni.request({
-					// 	url:"",
-					// 	method:"",
-					// 	success(res){
-					// 		// 成功请求到的数据
-					// 	}
-					// })
-					// h5和小程序要分开配置 因为小程序不存在跨域问题
-					// //#ifndef H5
-					// Vue.prototype.$url = 'http://xx.xx.xx.xx:xx'
-					// //#endif
+					//#ifndef H5
+					let url = 'http://localhost:8888'
+					//#endif
 					 
-					// //#ifdef H5
-					// Vue.prototype.$url = '/api'
-					// //#endif
+					//#ifdef H5
+					let url = '/dpc'
+					//#endif
+					uni.request({
+						url:url,
+						method:"GET",
+						data:{
+							name:this.name,
+							startDate:this.startDate,
+							endDate:this.endDate
+						},
+						success(res){
+							// 成功请求到的数据
+							for (let i =0;i<res.data.length;i++){
+								if(res.data[i].data !== null){
+									var everyday={}
+									everyday.data = res.data[i].data
+									everyday.breakfast = res.data[i].breakfast
+									everyday.lunch = res.data[i].lunch
+									everyday.dinner = res.data[i].dinner
+								}
+								this.dataTable.push(everyday)
+							}
+						}
+					})
+					
 					// 显示查询的结果
 					this.showSum = true
 				}

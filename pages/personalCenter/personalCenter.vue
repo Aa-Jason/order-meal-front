@@ -19,7 +19,7 @@
 		</view>
 		<view class="box-card2"  v-if="isAdministrators">
 		  <div class="text item2" @click="goCount" >
-			  <img src="../../static/count.png" class="img_count">
+			  <img src="@/static/count.png" class="img_count">
 			  <text class="text_count">统计报餐</text>
 			  <text class="jiantou">&gt</text>
 		  </div>
@@ -45,14 +45,30 @@
 		},
 		methods:{
 			goCount(){
-				uni.navigateTo({
-					url:"/pages/count/count"
-				})
+				let token = (wx.getStorageSync('token'))
+				if(token.length > 1){
+					uni.navigateTo({
+						url:"/pages/count/count"
+					})
+				}else{
+					uni.navigateTo({
+						url:"/pages/login/login"
+					})
+				}
+				
 			},
 			goCountPersonal(){
-				uni.navigateTo({
-					url:"/pages/count/countPersonal"
-				})
+				let token = (wx.getStorageSync('token'))
+				if(token.length > 1){
+					uni.navigateTo({
+						url:"/pages/countPersonal/countPersonal"
+					})
+				}else{
+					uni.navigateTo({
+						url:"/pages/login/login"
+					})
+				}
+				
 			},
 			goLogin(){
 				uni.navigateTo({
