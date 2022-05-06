@@ -2,7 +2,7 @@
 	<view>
 		<view  style="margin: 50rpx 30rpx;" @click="goLogin">
 			<view  style="float: left;width: 100rpx;height: 100rpx;border-radius: 50%;border: #a9a9a9 solid 1rpx;overflow: hidden;">
-				<img src="../../static/login.png" alt="" style="width: 100rpx;height: 100rpx;">
+				<img src="../../static/login.png"  style="width: 100rpx;height: 100rpx;">
 				<!-- <img url> -->
 			</view>
 			<view style="float: left;line-height: 100rpx;margin-left: 40rpx;font-size: 38rpx;">
@@ -41,6 +41,7 @@
 		onLoad() {
 			// 如果是管理员就显示统计报餐
 			this.isAdministrators = true
+			// this.login = wx.getStorage('name')
 		},
 		methods:{
 			goCount(){
@@ -54,7 +55,9 @@
 				})
 			},
 			goLogin(){
-				
+				uni.navigateTo({
+					url:"/pages/login/login"
+				})
 			}
 		}
 	}

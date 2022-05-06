@@ -4,8 +4,11 @@
 			<view class="date">
 				<view class="datetime" @tap="onShowDatePicker()">
 					<!-- <image src="../../static/check/date.png" mode="" style="width: 40upx;height: 40upx;margin: 0 20upx;"/> -->
-					<view style="color: #FFFFFF;text-align:center;font-size:29rpx;">{{ selectDate }}</view>
+					<input v-model="selectDate" style="color: #FFFFFF;text-align:center;font-size:29rpx;width: 100%;">
 				</view>
+				<input  placeholder-class="name" placeholder="请输入查询姓名" type="text" 
+				v-model="name" 
+				style="color: #FFFFFF;text-align:center;font-size:29rpx;width: 70%;border-radius:20px; background: #5B57FC;height: 80rpx;margin-left: 10rpx;padding-left: -10rpx;" >
 				<button class = "select" @click="selected">查询</button>
 			</view>
 			<mx-date-picker :show="showPickerDate" type='range' :show-tips="true"
@@ -72,6 +75,7 @@
 					lunchSum:0,
 					dinnerSum:0,
 					showSum:true,
+					name:'',
 					dataTable:[
 						['04-01',8,8,8],
 						['04-01',8,8,8],
@@ -152,11 +156,11 @@
 			padding: 10rpx;
 			position: fixed;
 			display: flex;
-			justify-content: center;
-			align-items: center;
+			/* justify-content: center; */
+			/* align-items: center; */
 			flex-wrap: wrap;
 			width: 100%;
-			height: 150rpx;
+			height: 200rpx;
 		}
 		.datetime{
 			width: 70%;
@@ -166,10 +170,12 @@
 			background: #5B57FC;
 			display: flex;
 			align-items: center;
-			padding-left: 30rpx;
-			margin-left:20rpx;
+			/* padding-left: 20rpx; */
+			margin-left:10rpx;
 			/* margin-bottom: 30rpx; */
 			text-align: center;
+			margin-bottom: 15rpx;
+			margin-top: 10rpx;
 		}
 		.select {
 			width:15%;
@@ -189,7 +195,7 @@
 		  .box-card {
 		    width: 87%;
 			/* position: fixed; */
-			margin-top:190rpx;
+			margin-top:250rpx;
 			margin-left:4%;
 			margin-right:7%;
 			margin-bottom: 20rpx;
@@ -198,6 +204,9 @@
 			box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
 			padding: 0 20rpx 20rpx 20rpx;
 			
+		  }
+		  .name {
+			  color: #FFFFFF;
 		  }
 	
 </style>

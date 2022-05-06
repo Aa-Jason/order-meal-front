@@ -33,7 +33,17 @@
 		},
 		{
 			"path": "pages/test"
+		},
+		{
+			"path": "pages/login"
+		},
+		{
+			"path": "pages/register/register"
+		},
+		{
+			"path": "pages/login/login"
 		}
+		
 	],
 	// 全局配置
 	"globalStyle": {
@@ -42,18 +52,23 @@
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},
-	// "condition" : { //模式配置，仅开发期间生效
-	// 	"current": 0, //当前激活的模式(list 的索引项)
-	// 	"list": [
+	"condition" : { //模式配置，仅开发期间生效
+		"current": 0, //当前激活的模式(list 的索引项)
+		"list": [
 			
-	// 		{
-	// 			"name": "布局",
-	// 			"path": "pages/layout/layout",
-	// 			"query": "99"
-	// 		},
+			{
+				"name": "布局",
+				"path": "pages/layout/layout",
+				"query": "99"
+			},
+			{
+				"name": "登录",
+				"path": "pages/login",
+				"query": "88"
+			}
 			
-	// 	]
-	// },
+		]
+	},
 	// 底部导航栏
 	"tabBar": {
 		"selectedColor": "0099ff",
