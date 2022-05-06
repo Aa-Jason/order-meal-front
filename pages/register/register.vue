@@ -115,7 +115,8 @@
 			if(name&mob&pd&dep){
 			uni.showToast({
 			  title: '注册成功',
-			  icon: 'none'
+			  icon: 'none',
+			  duration:2000
 			})
 			uni.request({
 				url:"",
@@ -124,11 +125,17 @@
 					departmentId:this.departmentId,
 					mobile:this.mobile,
 					password:this.password
+				},
+				success: (res) => {
+					uni.navigateTo({
+						url:"/pages/login/login"
+					})
+					
 				}
 			})
-			uni.navigateTo({
-				url:"/pages/login/login"
-			})
+			
+			
+			
 		  }
 		}
 	}

@@ -155,102 +155,9 @@
 				value2: new Date(),
 				year: '',
 				week: '',
-				// dateTable: [{
-				// 		date: {
-				// 			monday: ''
-				// 		},
-				// 		week: '周一',
-				// 		// date:this.monday,
-				// 		meal: [true, false, false]
-				// 		// breakfast: 0,
-				// 		// lunch: 0,
-				// 		// dinner: 0
-				// 	},
-				// 	{
-				// 		week: '周二',
-				// 		date: {
-				// 			Tuesday: ''
-				// 		},
-				// 		meal: [true, false, false],
-				// 		// breakfast: 0,
-				// 		// lunch: 0,
-				// 		// dinner: 0
-				// 	},
-				// 	{
-				// 		week: '周三',
-				// 		date: {
-				// 			Wednesday: ''
-				// 		},
-				// 		meal: [false, false, false],
-				// 		// breakfast: 0,
-				// 		// lunch: 0,
-				// 		// dinner: 0
-				// 	},
-				// 	{
-				// 		week: '周四',
-				// 		date: {
-				// 			Thursday: ''
-				// 		},
-				// 		meal: [false, false, false],
-				// 		// breakfast: 0,
-				// 		// lunch: 0,
-				// 		// dinner: 0
-				// 	},
-				// 	{
-				// 		week: '周五',
-				// 		date: {
-				// 			Friday: ''
-				// 		},
-				// 		meal: [false, false, false],
-				// 		// breakfast: 0,
-				// 		// lunch: 0,
-				// 		// dinner: 0
-				// 	},
-				// 	{
-				// 		week: '周六',
-				// 		date: {
-				// 			Saturday: ''
-				// 		},
-				// 		meal: [false, false, false],
-				// 		// breakfast: 0,
-				// 		// lunch: 0,
-				// 		// dinner: 0
-				// 	},
-				// 	{
-				// 		week: '周日',
-				// 		date: {
-				// 			sunday: ''
-				// 		},
-				// 		meal: [false, false, false],
-				// 		// breakfast: 0,
-				// 		// lunch: 0,
-				// 		// dinner: 0
-				// 	}
-				// ],
+				
 				weekData:['周一','周二','周三','周四','周五','周六','周日'],
-				// dateTable1: [
-				// 	[
-				// 		'',false,false,false
-				// 	],
-				// 	[
-				// 		'',false,false,false
-				// 	],
-				// 	[
-				// 		'',false,false,false
-				// 	],
-				// 	[
-				// 		'',false,false,false
-				// 	],
-				// 	[
-				// 		'',false,false,false
-				// 	],
-				// 	[
-				// 		'',false,false,false
-				// 	],
-				// 	[
-				// 		'',false,false,false
-				// 	],
-				// ],
+				
 				dateTable2: [{
 						date:'',
 						breakfast: false,
@@ -299,19 +206,7 @@
 		},
 		computed: {
 			// 这里可以写传到后台去的数据
-			// tableDate(){
-
-			// 	let tabledate = []
-			// 	for (let i = 0;i < 7;i++){
-			// 		let data = [this.dateTable1[i][0]]
-			// 		for (let j = 1;j<4;j++){
-			// 			data.push(this.dateTable1[i][j]==true?1:0)
-			// 		}
-			// 		tabledate.push(data)
-					
-			// 	}
-			// 	return tabledate
-			// },
+			
 			tableDate1(){
 			
 				let tabledate = []
@@ -433,11 +328,21 @@
 				this.value2 = this.$moment(this.value2)
 					.subtract(7, "days").toDate()
 				this.getDate1()
+				//#ifndef H5
+				let url = 'http://localhost:8888/xboot/order/getByStaffIDAndDate'
+				//#endif
+				 
+				//#ifdef H5
+				let url = '/dpc/xboot/order/getByStaffIDAndDate'
+				//#endif
 				uni.request({
-					url:"",
+					url:url,
 					data:{
 						startDay:this.year + '-' + this.dateTable2[0].date,
 						endDay:this.year + '-' + this.dateTable2[6].date
+					},
+					header:{
+						'token':wx.getStorage('token')
 					},
 					success: (res) => {
 						for (let i = 0;i<7;i++){
@@ -459,13 +364,8 @@
 				// 向服务器请求上一周的早午晚餐数据
 				// 要判断一下数据库返回的数组是不是空的
 				// 如果是空的要置空
-				// 假设一个数据  根据后台传过来的数据更改dateTable
-				// let mealDate = [
-				// 	{a:[true,false,true]},
-
-				// ]
-				// this.dateTable[0].meal = mealDate[0].a
-
+				// 根据后台传过来的数据更改dateTable
+				
 
 
 			},
@@ -474,11 +374,21 @@
 				this.value2 = this.$moment(this.value2)
 					.add(7, "days").toDate()
 				this.getDate1()
+				//#ifndef H5
+				let url = 'http://localhost:8888/xboot/order/getByStaffIDAndDate'
+				//#endif
+				 
+				//#ifdef H5
+				let url = '/dpc/xboot/order/getByStaffIDAndDate'
+				//#endif
 				uni.request({
-					url:"",
+					url:url,
 					data:{
 						startDay:this.year + '-' + this.dateTable2[0].date,
 						endDay:this.year + '-' + this.dateTable2[6].date
+					},
+					header:{
+						'token':wx.getStorage('token')
 					},
 					success: (res) => {
 						for (let i = 0;i<7;i++){
@@ -501,13 +411,30 @@
 			orderMeal() {
 				// 提交报餐数据到数据库(this.tableDate)
 				// 要查询一下用户是否登录
-				let token = (wx.getStorageSync('token'))
+				//#ifndef H5
+				let url = 'http://localhost:8888/xboot/order/addOrder'
+				//#endif
+				 
+				//#ifdef H5
+				let url = '/dpc/xboot/order/addOrder'
+				//#endif
+				let token = wx.getStorageSync('token')
 				if(token.length > 1){
 					uni.request({
-						url:"",
+						url:url,
 						data:this.tableDate1,
+						header:{
+							'token':wx.getStorage('token')
+						},
 						success: (res) => {
-							alert('提交成功')
+							uni.showToast({
+							  title: '提交成功',
+							  icon: 'none',
+							  duration:2000
+							})
+						},
+						fail() {
+							
 						}
 					})
 				}else{

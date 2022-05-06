@@ -11,7 +11,7 @@
 				style="color: #FFFFFF;text-align:center;font-size:29rpx;width: 70%;border-radius:20px; background: #5B57FC;height: 80rpx;margin-left: 10rpx;padding-left: -10rpx;" >
 				<button class = "select" @click="selected">统计</button>
 			</view>
-			<mx-date-picker :show="showPickerDate" type='range' :show-tips="true"
+			<mx-date-picker value-format="yyyy-mm-dd" :show="showPickerDate" type='range' :show-tips="true"
 			 @confirm="onSelected" @cancel="onSelected" />
 		</view>
 		<view>
@@ -90,23 +90,27 @@
 					if (e) {
 						this[this.type] = e.value;
 						this.startDate = e.value[0];
+						let arr = this.startDate.split('/')
+						this.startDate = arr.join('-')
 						this.endDate = e.value[1];
+						let arr1 = this.endDate.split('/')
+						this.endDate = arr1.join('-')
+						console.log(this.endDate)
 						this.selectDate = e.value[0] +' — '+e.value[1];
 					}
 				},
 				cancel() {},
 				selected(){
 					// 传要查询的日期过去
-					
 					this.dataTable = []
 					console.log(this.startDate,this.endDate)
 					// 得到后台返回的数据 并给data里的数据赋值
 					//#ifndef H5
-					let url = 'http://localhost:8888'
+					let url = 'http://localhost:8888/xboot/order/getSumByDate'
 					//#endif
 					 
 					//#ifdef H5
-					let url = '/dpc'
+					let url = '/dpc/xboot/order/getSumByDate'
 					//#endif
 					uni.request({
 						url:url,
@@ -115,6 +119,9 @@
 							name:this.name,
 							startDate:this.startDate,
 							endDate:this.endDate
+						},
+						header:{
+							'token':wx.getStorage('token')
 						},
 						success(res){
 							// 成功请求到的数据

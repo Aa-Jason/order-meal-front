@@ -1,10 +1,14 @@
-const BASE_URL = ''
+const BASE_URL = 'http://localhost:8888'
 export const myRequest = (options)=>{
 	return new Promise((resolve,reject)=>{
 		uni.request({
 			url:BASE_URL+options.url,
 			method:options.method || 'GET',
 			data:options.data || {},
+			// 配置请求头
+			header:{
+				'token':wx.getStorage('token')
+			},
 			success:(res)=>{
 				if(res.data.status !== 0){
 					return uni.showToast({

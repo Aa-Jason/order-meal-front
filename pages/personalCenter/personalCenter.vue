@@ -34,18 +34,21 @@
 			return {
 				isAdministrators:false,
 				login:"请登录",
-				isLogin:false
+				isLogin:false,
+				power:''
 				
 			}
 		},
 		onLoad() {
+			
+			// this.getUserInfo()
 			// 如果是管理员就显示统计报餐
 			this.isAdministrators = true
 			// this.login = wx.getStorage('name')
 		},
 		methods:{
 			goCount(){
-				let token = (wx.getStorageSync('token'))
+				let token = wx.getStorageSync('token')
 				if(token.length > 1){
 					uni.navigateTo({
 						url:"/pages/count/count"
@@ -58,7 +61,7 @@
 				
 			},
 			goCountPersonal(){
-				let token = (wx.getStorageSync('token'))
+				let token = wx.getStorageSync('token')
 				if(token.length > 1){
 					uni.navigateTo({
 						url:"/pages/countPersonal/countPersonal"
@@ -74,7 +77,28 @@
 				uni.navigateTo({
 					url:"/pages/login/login"
 				})
-			}
+			},
+			// getUserInfo(){
+			// 	//#ifndef H5
+			// 	let url = 'http://localhost:8888/xboot/order'
+			// 	//#endif
+				 
+			// 	//#ifdef H5
+			// 	let url = '/dpc/xboot/order'
+			// 	//#endif
+			// 	uni.request({
+			// 		url:url,
+			// 		method:"GET",
+			// 		header:{
+			// 			'token':wx.getStorage('token')
+			// 		},
+			// 		success(res){
+			// 			// 成功请求到的数据
+			// 			this.login = res.data.name
+			// 			this.power = res.data.power
+			// 		}
+			// 	})
+			// }
 		}
 	}
 </script>

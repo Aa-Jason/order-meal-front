@@ -98,11 +98,11 @@
 					console.log(this.startDate,this.endDate)
 					// 得到后台返回的数据 并给data里的数据赋值
 					//#ifndef H5
-					let url = 'http://gmall-h5-api.atguigu.cn/api/product/getBaseCategoryList'
+					let url = 'http://localhost:8888/xboot/order/getByStaffIDAndDate'
 					//#endif
 					 
 					//#ifdef H5
-					let url = '/dpc/api/product/getBaseCategoryList'
+					let url = '/dpc/xboot/order/getByStaffIDAndDate'
 					//#endif
 					uni.request({
 						url:url,
@@ -110,6 +110,9 @@
 						data:{
 							startDate:this.startDate,
 							endDate:this.endDate
+						},
+						header:{
+							'token':wx.getStorage('token')
 						},
 						success(res){
 							// 成功请求到的数据

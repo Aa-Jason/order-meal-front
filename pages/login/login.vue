@@ -36,30 +36,35 @@
 				
 			}
 		},
+		
 		methods:{
 			goLogin(){
-				// uni.request({
-				// 	url:'',
-				// 	data:{
-				// 		mobile:this.mobile,
-				// 		password:this.password,
-				// 	},
-				// 	success:(res)=>{
-				// 		wx.setStorageSync('token',res.data.token)
-				// 		wx.setStorage('name',res.data.name)
-				// 	}
-				// })
-				wx.setStorageSync('token','lmk')
-				// 登录成功之后返回登录页面
-				uni.switchTab({
-					url:"/pages/personalCenter/personalCenter",
+				uni.request({
+					url:'',
+					data:{
+						mobile:this.mobile,
+						password:this.password,
+					},
+					success:(res)=>{
+						// 存储token
+						wx.setStorageSync('token',res.data.token)
+						// 存储姓名
+						// wx.setStorageSync('name',res.data.name)
+						uni.switchTab({
+							url:"/pages/personalCenter/personalCenter",
+						})
+					}
 				})
+				// wx.setStorageSync('token','lmk')
+				
+				
 			},
 			goRegister(){
 				uni.navigateTo({
 					url:"/pages/register/register"
 				})
-			}
+			},
+			
 		}
 	}
 </script>
