@@ -136,43 +136,83 @@
 					if (this.departmentTitle !== '请选择统计部门'){
 						department = this.departmentTitle
 					}
-					// 得到后台返回的数据 并给data里的数据赋值
-					//#ifndef H5
-					let url = 'http://localhost:8888/xboot/order/getSumByDate'
-					//#endif
-					 
-					//#ifdef H5
-					let url = '/dpc/xboot/order/getSumByDate'
-					//#endif
-					uni.request({
-						url:url,
-						method:"GET",
-						data:{
-							name:this.name,
-							startDate:this.startDate,
-							endDate:this.endDate,
-							departmentTitle:department
-						},
-						header:{
-							'token':wx.getStorageSync('token')
-						},
-						success(res){
-							// 成功请求到的数据
-							for (let i =0;i<res.data.length;i++){
-								if(res.data[i].data !== null){
-									var everyday={}
-									everyday.data = res.data[i].data
-									everyday.breakfast = res.data[i].breakfast
-									everyday.lunch = res.data[i].lunch
-									everyday.dinner = res.data[i].dinner
+					let date = false
+					if(!this.startDate){
+						uni.showToast({
+						  title: '请选择查询时间',
+						  icon:'none',
+						  duration:1000
+						})
+					}else{
+						date = true
+					}
+					let name = false
+					if(this.name && !this.department){
+						uni.showToast({
+						  title: '请选择查询姓名所属部门',
+						  icon:'none',
+						  duration:1000
+						})
+					}else{
+						name = true
+					}
+					if(date&name){
+						// 得到后台返回的数据 并给data里的数据赋值
+						//#ifndef H5
+						let url = 'http://localhost:8888/xboot/order/getSumByDate'
+						//#endif
+						 
+						//#ifdef H5
+						let url = '/dpc/xboot/order/getSumByDate'
+						//#endif
+						uni.request({
+							url:url,
+							method:"GET",
+							data:{
+								name:this.name,
+								startDate:this.startDate,
+								endDate:this.endDate,
+								departmentTitle:department
+							},
+							header:{
+								'accessToken':wx.getStorageSync('token')
+							},
+							success(res){
+								if(res.data.code == '200'){
+									// 成功请求到的数据
+									// for (let i =0;i<res.data.result.length;i++){
+									// 	if(res.data.result[i] !== null){
+									// 		var everyday={}
+									// 		everyday.date = res.data.result[i].date
+									// 		everyday.breakfast = res.data.result[i].breakfast
+									// 		everyday.lunch = res.data.result[i].lunch
+									// 		everyday.dinner = res.data.result[i].dinner
+									// 	}
+									// 	this.dataTable.push(everyday)
+									// }
+									
+									
+									for (let i =0;i<res.data.result.length;i++){
+										if(res.data.result[i] !== null){
+											var everyday=[]
+											everyday[0] = res.data.result[i].date
+											everyday[1] = res.data.result[i].breakfast
+											everyday[2] = res.data.result[i].lunch
+											everyday[3] = res.data.result[i].dinner
+										}
+										this.dataTable.push(everyday)
+									}
+									
 								}
-								this.dataTable.push(everyday)
+								
 							}
-						}
-					})
+						})
+						
+						// 显示查询的结果
+						this.showSum = true
+					}
 					
-					// 显示查询的结果
-					this.showSum = true
+					
 				}
 			}
 		}

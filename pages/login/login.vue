@@ -8,7 +8,7 @@
 			<view class="font-big mb-5" style="font-size: 60rpx;">密码登录</view>
 			
 			<input type="text" class="border-bottom mb-4 uni-input px-0"
-			placeholder="请输入手机号" v-model="mobile"
+			placeholder="请输入用户名" v-model="username"
 			placeholder-class="text-light-muted" 
 			style="border-bottom:1rpx solid #D3D3D3 ;margin: 50rpx 0;padding-bottom: 20rpx;"
 			/>
@@ -31,7 +31,7 @@
 	export default {
 		data(){
 			return {
-				mobile:'',
+				username:'',
 				password:'',
 				
 			}
@@ -53,19 +53,21 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					data:{
-						mobile:this.mobile,
+						username:this.username,
 						password:this.password,
 					},
 					success:(res)=>{
-						// 存储token
+						if(res.data.code == '200'){
+							// 存储token
+							wx.setStorageSync('token',res.data.token)
+							
+							// 存储姓名
+							// wx.setStorageSync('name',res.data.name)
+							uni.switchTab({
+								url:"/pages/personalCenter/personalCenter",
+							})
+						}
 						
-						// wx.setStorageSync('token',res.data.token)
-						
-						// 存储姓名
-						// wx.setStorageSync('name',res.data.name)
-						uni.switchTab({
-							url:"/pages/personalCenter/personalCenter",
-						})
 					}
 				})
 				// wx.setStorageSync('token','lmk')

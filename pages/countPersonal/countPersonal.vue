@@ -29,7 +29,7 @@
 					</text>
 				</view >
 				
-				<view v-for="(everyDay,index) in dataTable" :key="index" class="text">
+				<!-- <view v-for="(everyDay,index) in dataTable" :key="index" class="text">
 					<text class="item">
 						{{everyDay.date}}
 					</text >
@@ -41,6 +41,22 @@
 					</text>
 					<text class="item1">
 						{{everyDay.dinner}}
+					</text>
+				</view> -->
+				
+				
+				<view v-for="(everyDay,index) in dataTable" :key="index" class="text">
+					<text class="item">
+						{{everyDay[0]}}
+					</text >
+					<text class="item1">
+						{{everyDay[1]}}
+					</text>
+					<text class="item1">
+						{{everyDay[2]}}
+					</text>
+					<text class="item1">
+						{{everyDay[3]}}
 					</text>
 				</view>
 				
@@ -116,20 +132,34 @@
 							endDate:this.endDate
 						},
 						header:{
-							'token':wx.getStorageSync('token')
+							'accessToken':wx.getStorageSync('token')
 						},
 						success(res){
-							// 成功请求到的数据
-							for (let i =0;i<res.data.length;i++){
-								if(res.data[i].data !== null){
-									var everyday={}
-									everyday.data = res.data[i].data
-									everyday.breakfast = res.data[i].breakfast
-									everyday.lunch = res.data[i].lunch
-									everyday.dinner = res.data[i].dinner
+							if(res.data.code == '200'){
+								// 成功请求到的数据
+								// for (let i =0;i<res.data.result.length;i++){
+								// 	if(res.data.result[i] !== null){
+								// 		var everyday={}
+								// 		everyday.date = res.data.result[i].date
+								// 		everyday.breakfast = res.data.result[i].breakfast
+								// 		everyday.lunch = res.data.result[i].lunch
+								// 		everyday.dinner = res.data.result[i].dinner
+								// 	}
+								// 	this.dataTable.push(everyday)
+								// }
+								
+								for (let i =0;i<res.data.result.length;i++){
+									if(res.data.result[i] !== null){
+										var everyday=[]
+										everyday[0] = res.data.result[i].date
+										everyday[1] = res.data.result[i].breakfast
+										everyday[2] = res.data.result[i].lunch
+										everyday[3] = res.data.result[i].dinner
+									}
+									this.dataTable.push(everyday)
 								}
-								this.dataTable.push(everyday)
 							}
+							
 						}
 					})
 					

@@ -54,15 +54,18 @@
 		methods:{
 			goCount(){
 				let token = wx.getStorageSync('token')
-				if(token.length > 1){
-					uni.navigateTo({
+				// if(token.length > 1){
+				// 	uni.navigateTo({
+				// 		url:"/pages/count/count"
+				// 	})
+				// }else{
+				// 	uni.navigateTo({
+				// 		url:"/pages/login/login"
+				// 	})
+				// }
+				uni.navigateTo({
 						url:"/pages/count/count"
 					})
-				}else{
-					uni.navigateTo({
-						url:"/pages/login/login"
-					})
-				}
 				
 			},
 			goCountPersonal(){

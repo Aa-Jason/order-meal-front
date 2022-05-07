@@ -338,25 +338,28 @@
 				uni.request({
 					url:url,
 					data:{
-						startDay:this.year + '-' + this.dateTable2[0].date,
-						endDay:this.year + '-' + this.dateTable2[6].date
+						startDate:this.year + '-' + this.dateTable2[0].date,
+						endDate:this.year + '-' + this.dateTable2[6].date
 					},
 					header:{
-						'token':wx.getStorageSync('token')
+						'accessToken':wx.getStorageSync('token')
 					},
 					success: (res) => {
-						for (let i = 0;i<7;i++){
-							if(res.data[i].date!==null){
-								this.dateTable2[i].breakfast = res.data[i].breakfast == 1?true:false
-								this.dateTable2[i].lunch = res.data[i].lunch == 1?true:false
-								this.dateTable2[i].dinner = res.data[i].dinner == 1?true:false
-								
-							}else{
-								this.dateTable2[i].breakfast = false
-								this.dateTable2[i].lunch = false
-								this.dateTable2[i].dinner = false
+						if(res.data.code == '200'){
+							for (let i = 0;i<7;i++){
+								if(res.data.result[i]!==null){
+									this.dateTable2[i].breakfast = res.data.result[i].breakfast == 1?true:false
+									this.dateTable2[i].lunch = res.data.result[i].lunch == 1?true:false
+									this.dateTable2[i].dinner = res.data.result[i].dinner == 1?true:false
+									
+								}else{
+									this.dateTable2[i].breakfast = false
+									this.dateTable2[i].lunch = false
+									this.dateTable2[i].dinner = false
+								}
 							}
 						}
+						
 						
 					}
 				})
@@ -384,23 +387,25 @@
 				uni.request({
 					url:url,
 					data:{
-						startDay:this.year + '-' + this.dateTable2[0].date,
-						endDay:this.year + '-' + this.dateTable2[6].date
+						startDate:this.year + '-' + this.dateTable2[0].date,
+						endDate:this.year + '-' + this.dateTable2[6].date
 					},
 					header:{
-						'token':wx.getStorageSync('token')
+						'accessToken':wx.getStorageSync('token')
 					},
 					success: (res) => {
-						for (let i = 0;i<7;i++){
-							if(res.data[i].date!==null){
-								this.dateTable2[i].breakfast = res.data[i].breakfast == 1?true:false
-								this.dateTable2[i].lunch = res.data[i].lunch == 1?true:false
-								this.dateTable2[i].dinner = res.data[i].dinner == 1?true:false
-								
-							}else{
-								this.dateTable2[i].breakfast = false
-								this.dateTable2[i].lunch = false
-								this.dateTable2[i].dinner = false
+						if(res.data.code == '200'){
+							for (let i = 0;i<7;i++){
+								if(res.data.result[i]!==null){
+									this.dateTable2[i].breakfast = res.data.result[i].breakfast == 1?true:false
+									this.dateTable2[i].lunch = res.data.result[i].lunch == 1?true:false
+									this.dateTable2[i].dinner = res.data.result[i].dinner == 1?true:false
+									
+								}else{
+									this.dateTable2[i].breakfast = false
+									this.dateTable2[i].lunch = false
+									this.dateTable2[i].dinner = false
+								}
 							}
 						}
 						
@@ -422,11 +427,12 @@
 				if(token.length > 1){
 					uni.request({
 						url:url,
-						data:this.tableDate1,
+						data:{
+							data:this.tableDate1,
+						},
 						method:"POST",
-						
 						header:{
-							'token':wx.getStorageSync('token'),
+							'accessToken':wx.getStorageSync('token'),
 							'content-type': 'application/x-www-form-urlencoded'
 						},
 						success: (res) => {

@@ -4,7 +4,7 @@
 			<view class="font-big mb-5" style="font-size: 60rpx;">注册新用户</view>
 			
 			<input type="text" class="border-bottom mb-4 uni-input px-0"
-			placeholder="请输入你的姓名" v-model="nickname"
+			placeholder="请输入你的姓名" v-model="username"
 			placeholder-class="text-light-muted" 
 			style="border-bottom:1rpx solid #D3D3D3 ;margin: 50rpx 0;padding-bottom: 20rpx;"
 			/>
@@ -47,7 +47,7 @@
         mobile:'',
         againpd:'',
         password:'',
-        nickname:'',
+        username:'',
 		departmentId:'--请选择--',
 		array:[]
       }
@@ -162,20 +162,30 @@
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				data:{
-					nickname:this.nickname,
+					username:this.username,
 					departmentTitle:this.departmentId,
 					mobile:this.mobile,
 					password:this.password
 				},
 				success: (res) => {
-					uni.navigateTo({
-						url:"/pages/login/login"
-					})
+					if(res.data.code == '200'){
+						uni.navigateTo({
+							url:"/pages/login/login"
+						})
+					}else{
+						uni.showToast({
+						  title: '注册失败',
+						  icon:'none',
+						  duration:2000
+						})
+					}
+					
 					
 				},
 				fail(err) {
 					uni.showToast({
 					  title: '注册失败',
+					  icon:'none',
 					  duration:2000
 					})
 				}
