@@ -5,5 +5,8 @@
     "description": "下拉多选 下拉单选",
     "keywords": [
         "select"
-    ]
+    ],
+    "dependencies": {
+        "moment": "^2.29.3"
+    }
 }

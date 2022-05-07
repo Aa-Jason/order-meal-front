@@ -116,20 +116,21 @@
 							endDate:this.endDate
 						},
 						header:{
-							'token':wx.getStorageSync('token')
+							'accessToken':wx.getStorageSync('token')
 						},
 						success(res){
 							// 成功请求到的数据
-							for (let i =0;i<res.data.length;i++){
-								if(res.data[i].data !== null){
-									var everyday={}
-									everyday.data = res.data[i].data
-									everyday.breakfast = res.data[i].breakfast
-									everyday.lunch = res.data[i].lunch
-									everyday.dinner = res.data[i].dinner
-								}
-								this.dataTable.push(everyday)
-							}
+							console.log(res)
+							// for (let i =0;i<res.data.length;i++){
+							// 	if(res.data[i].data !== null){
+							// 		var everyday={}
+							// 		everyday.data = res.data[i].data
+							// 		everyday.breakfast = res.data[i].breakfast
+							// 		everyday.lunch = res.data[i].lunch
+							// 		everyday.dinner = res.data[i].dinner
+							// 	}
+							// 	this.dataTable.push(everyday)
+							// }
 						}
 					})
 					

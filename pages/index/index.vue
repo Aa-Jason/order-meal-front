@@ -338,25 +338,27 @@
 				uni.request({
 					url:url,
 					data:{
-						startDay:this.year + '-' + this.dateTable2[0].date,
-						endDay:this.year + '-' + this.dateTable2[6].date
+						startDate:this.year + '-' + this.dateTable2[0].date,
+						endDate:this.year + '-' + this.dateTable2[6].date
 					},
+					
 					header:{
-						'token':wx.getStorageSync('token')
+						'accessToken':wx.getStorageSync('token')
 					},
 					success: (res) => {
-						for (let i = 0;i<7;i++){
-							if(res.data[i].date!==null){
-								this.dateTable2[i].breakfast = res.data[i].breakfast == 1?true:false
-								this.dateTable2[i].lunch = res.data[i].lunch == 1?true:false
-								this.dateTable2[i].dinner = res.data[i].dinner == 1?true:false
+						console.log(res)
+						// for (let i = 0;i<7;i++){
+						// 	if(res.data[i].date!==null){
+						// 		this.dateTable2[i].breakfast = res.data[i].breakfast == 1?true:false
+						// 		this.dateTable2[i].lunch = res.data[i].lunch == 1?true:false
+						// 		this.dateTable2[i].dinner = res.data[i].dinner == 1?true:false
 								
-							}else{
-								this.dateTable2[i].breakfast = false
-								this.dateTable2[i].lunch = false
-								this.dateTable2[i].dinner = false
-							}
-						}
+						// 	}else{
+						// 		this.dateTable2[i].breakfast = false
+						// 		this.dateTable2[i].lunch = false
+						// 		this.dateTable2[i].dinner = false
+						// 	}
+						// }
 						
 					}
 				})
@@ -381,31 +383,31 @@
 				//#ifdef H5
 				let url = '/dpc/xboot/order/getByStaffIDAndDate'
 				//#endif
-				uni.request({
-					url:url,
-					data:{
-						startDay:this.year + '-' + this.dateTable2[0].date,
-						endDay:this.year + '-' + this.dateTable2[6].date
-					},
-					header:{
-						'token':wx.getStorageSync('token')
-					},
-					success: (res) => {
-						for (let i = 0;i<7;i++){
-							if(res.data[i].date!==null){
-								this.dateTable2[i].breakfast = res.data[i].breakfast == 1?true:false
-								this.dateTable2[i].lunch = res.data[i].lunch == 1?true:false
-								this.dateTable2[i].dinner = res.data[i].dinner == 1?true:false
+				// uni.request({
+				// 	url:url,
+				// 	data:{
+				// 		startDay:this.year + '-' + this.dateTable2[0].date,
+				// 		endDay:this.year + '-' + this.dateTable2[6].date
+				// 	},
+				// 	header:{
+				// 		'token':wx.getStorageSync('token')
+				// 	},
+				// 	success: (res) => {
+				// 		for (let i = 0;i<7;i++){
+				// 			if(res.data[i].date!==null){
+				// 				this.dateTable2[i].breakfast = res.data[i].breakfast == 1?true:false
+				// 				this.dateTable2[i].lunch = res.data[i].lunch == 1?true:false
+				// 				this.dateTable2[i].dinner = res.data[i].dinner == 1?true:false
 								
-							}else{
-								this.dateTable2[i].breakfast = false
-								this.dateTable2[i].lunch = false
-								this.dateTable2[i].dinner = false
-							}
-						}
+				// 			}else{
+				// 				this.dateTable2[i].breakfast = false
+				// 				this.dateTable2[i].lunch = false
+				// 				this.dateTable2[i].dinner = false
+				// 			}
+				// 		}
 						
-					}
-				})
+				// 	}
+				// })
 
 			},
 			orderMeal() {
@@ -422,16 +424,26 @@
 				if(token.length > 1){
 					uni.request({
 						url:url,
-						data:this.tableDate1,
-						header:{
-							'token':wx.getStorageSync('token')
+						data:
+						{
+							date:'2022-05-08',
+							breakfast:0,
+							lunch:1,
+							dinner:0
 						},
+						method:"POST",
+						      
+						      header:{
+						       'accessToken':wx.getStorageSync('token'),
+						       'content-type': 'application/x-www-form-urlencoded'
+						      },
 						success: (res) => {
 							uni.showToast({
 							  title: '提交成功',
 							  icon: 'none',
 							  duration:2000
 							})
+							console.log(res)
 						},
 						fail() {
 							

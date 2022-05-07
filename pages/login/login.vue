@@ -53,13 +53,14 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					data:{
-						mobile:this.mobile,
+						username:this.mobile,
+						// mobile:this.mobile,
 						password:this.password,
 					},
 					success:(res)=>{
 						// 存储token
-						wx.setStorageSync('token',res.data.token)
-						
+						wx.setStorageSync('token',res.data.result)
+						console.log(res)
 						// 存储姓名
 						// wx.setStorageSync('name',res.data.name)
 						uni.switchTab({

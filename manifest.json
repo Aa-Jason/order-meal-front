@@ -59,7 +59,7 @@
 	// h5跨域
 	 "h5": {
 	  "devServer": {
-	      // "port": 8088,
+	      //"port": 8888,
 	      // "disableHostCheck": true,
 	      "proxy": {
 	          "/dpc": {

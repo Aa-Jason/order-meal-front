@@ -49,7 +49,7 @@
         password:'',
         nickname:'',
 		departmentId:'--请选择--',
-		array:[]
+		array:['000']
       }
 	  
     },
@@ -162,7 +162,7 @@
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				data:{
-					nickname:this.nickname,
+					username:this.nickname,
 					departmentTitle:this.departmentId,
 					mobile:this.mobile,
 					password:this.password
