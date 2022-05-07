@@ -58,7 +58,8 @@
 					},
 					success:(res)=>{
 						// 存储token
-						wx.setStorageSync('token',res.data.token)
+						
+						// wx.setStorageSync('token',res.data.token)
 						
 						// 存储姓名
 						// wx.setStorageSync('name',res.data.name)

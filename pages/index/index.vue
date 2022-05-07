@@ -423,8 +423,11 @@
 					uni.request({
 						url:url,
 						data:this.tableDate1,
+						method:"POST",
+						
 						header:{
-							'token':wx.getStorageSync('token')
+							'token':wx.getStorageSync('token'),
+							'content-type': 'application/x-www-form-urlencoded'
 						},
 						success: (res) => {
 							uni.showToast({
