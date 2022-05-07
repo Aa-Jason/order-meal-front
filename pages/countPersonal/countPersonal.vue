@@ -87,8 +87,12 @@
 					if (e) {
 						this[this.type] = e.value;
 						this.startDate = e.value[0];
+						let arr = this.startDate.split('/')
+						this.startDate = arr.join('-')
 						this.endDate = e.value[1];
-						this.selectDate = e.value[0] +' — '+e.value[1];
+						let arr1 = this.endDate.split('/')
+						this.endDate = arr1.join('-')
+						this.selectDate = this.startDate +' — '+this.endDate;
 					}
 				},
 				cancel() {},
@@ -112,7 +116,7 @@
 							endDate:this.endDate
 						},
 						header:{
-							'token':wx.getStorage('token')
+							'token':wx.getStorageSync('token')
 						},
 						success(res){
 							// 成功请求到的数据

@@ -4,7 +4,7 @@ import App from './App'
 import moment from 'moment';
 Vue.prototype.$moment = moment;
 
-配置封装的uni.request
+//配置封装的uni.request
 import {myRequest} from './util/api'
 Vue.prototype.$myRequest = myRequest
 

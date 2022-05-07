@@ -6,12 +6,19 @@
 					<!-- <image src="../../static/check/date.png" mode="" style="width: 40upx;height: 40upx;margin: 0 20upx;"/> -->
 					<input v-model="selectDate" style="color: #FFFFFF;text-align:center;font-size:29rpx;width: 100%;">
 				</view>
+				
+				<picker @change="bindPickerChange":range="array" style="color: #FFFFFF;width: 70%;border-radius:20px; background: #5B57FC;height: 80rpx;margin-left: 10rpx;padding-left: -10rpx;">
+				  <label style="font-size: 17px;color: #FFFFFF;text-align:center;line-height: 80rpx;font-size:29rpx;">{{departmentTitle}}</label>
+
+				</picker>
+				
+				
 				<input  placeholder-class="name" placeholder="请输入查询姓名" type="text" 
 				v-model="name" 
-				style="color: #FFFFFF;text-align:center;font-size:29rpx;width: 70%;border-radius:20px; background: #5B57FC;height: 80rpx;margin-left: 10rpx;padding-left: -10rpx;" >
+				style="color: #FFFFFF;text-align:center;font-size:29rpx;width: 70%;border-radius:20px; background: #5B57FC;height: 80rpx;margin-left: 10rpx;padding-left: -10rpx;margin-top: 15rpx;" >
 				<button class = "select" @click="selected">统计</button>
 			</view>
-			<mx-date-picker value-format="yyyy-mm-dd" :show="showPickerDate" type='range' :show-tips="true"
+			<mx-date-picker  :show="showPickerDate" type='range' :show-tips="true"
 			 @confirm="onSelected" @cancel="onSelected" />
 		</view>
 		<view>
@@ -61,23 +68,45 @@
 
 <script>
 	import MxDatePicker from '../../components/mx-datepicker/mx-datepicker.vue';
+	import ldSelect from '@/components/ld-select/ld-select.vue'
 	export default {
 			components: {
 				MxDatePicker,
 			},
 			data() {
 				return {
+					departmentTitle:'请选择统计部门',
+					array:['请选择统计部门','部门一','部门二','部门三'],
 					showPickerDate:false,
 					startDate: '',
 					endDate: '',
-					selectDate:'请选择统计时间范围',
+					selectDate:'请选择统计时间',
 					showSum:false,
 					name:'',
 					dataTable:[]
 				}
 			},
-			onLoad() {},
+			// onLoad() {
+			// 	//#ifndef H5
+			// 	let url = 'http://localhost:8888/xboot/order/getByStaffIDAndDate'
+			// 	//#endif
+				 
+			// 	//#ifdef H5
+			// 	let url = '/dpc/xboot/order/getByStaffIDAndDate'
+			// 	//#endif
+			// 	uni.request({
+			// 		url:url,
+			// 		success:(res)=>{
+			// 			this.array = res.data
+			// 			this.array.unshift('请选择统计部门')
+			// 		}
+			// 	})
+			// },
 			methods: {
+				bindPickerChange:function(e){
+				  this.index = e.target.value
+				  this.departmentTitle = this.array[this.index]
+				},
 				onShowDatePicker(type) {
 					//显示
 					this.showPickerDate = true;
@@ -96,14 +125,17 @@
 						let arr1 = this.endDate.split('/')
 						this.endDate = arr1.join('-')
 						console.log(this.endDate)
-						this.selectDate = e.value[0] +' — '+e.value[1];
+						this.selectDate = this.startDate +' — '+ this.endDate;
 					}
 				},
 				cancel() {},
 				selected(){
 					// 传要查询的日期过去
 					this.dataTable = []
-					console.log(this.startDate,this.endDate)
+					let department = ''
+					if (this.departmentTitle !== '请选择统计部门'){
+						department = this.departmentTitle
+					}
 					// 得到后台返回的数据 并给data里的数据赋值
 					//#ifndef H5
 					let url = 'http://localhost:8888/xboot/order/getSumByDate'
@@ -118,10 +150,11 @@
 						data:{
 							name:this.name,
 							startDate:this.startDate,
-							endDate:this.endDate
+							endDate:this.endDate,
+							departmentTitle:department
 						},
 						header:{
-							'token':wx.getStorage('token')
+							'token':wx.getStorageSync('token')
 						},
 						success(res){
 							// 成功请求到的数据
@@ -162,7 +195,7 @@
 			/* align-items: center; */
 			flex-wrap: wrap;
 			width: 100%;
-			height: 200rpx;
+			height: 300rpx;
 		}
 		.datetime{
 			width: 70%;
@@ -185,6 +218,7 @@
 			font-size:29rpx;
 			line-height:70rpx;
 			color: #402EF1;
+			margin-top: 20rpx;
 		}
 		.text {
 		    font-size: 36rpx;
@@ -197,7 +231,7 @@
 		  .box-card {
 		    width: 87%;
 			/* position: fixed; */
-			margin-top:250rpx;
+			margin-top:350rpx;
 			margin-left:4%;
 			margin-right:7%;
 			margin-bottom: 20rpx;

@@ -2,7 +2,7 @@
 	<view>
 		<view  style="margin: 50rpx 30rpx;" @click="goLogin">
 			<view  style="float: left;width: 100rpx;height: 100rpx;border-radius: 50%;border: #a9a9a9 solid 1rpx;overflow: hidden;">
-				<img src="../../static/login.png"  style="width: 100rpx;height: 100rpx;">
+				<img :src="loginImg"  style="width: 100rpx;height: 100rpx;">
 				<!-- <img url> -->
 			</view>
 			<view style="float: left;line-height: 100rpx;margin-left: 40rpx;font-size: 38rpx;">
@@ -32,18 +32,23 @@
 	export default {
 		data(){
 			return {
-				isAdministrators:false,
+				isAdministrators:true,
 				login:"请登录",
+				loginImg:'../../static/login.png',
 				isLogin:false,
 				power:''
 				
 			}
 		},
 		onLoad() {
-			
+			let token = wx.getStorageSync('token')
+			if(token.length > 1){
+				this.loginImg = '../../static/loginSuccess.png'
+				// this.getUserInfo()
+			}
 			// this.getUserInfo()
 			// 如果是管理员就显示统计报餐
-			this.isAdministrators = true
+			
 			// this.login = wx.getStorage('name')
 		},
 		methods:{
@@ -96,6 +101,10 @@
 			// 			// 成功请求到的数据
 			// 			this.login = res.data.name
 			// 			this.power = res.data.power
+						// if(this.power === ''){
+						// 	this.isAdministrators = true
+						// }
+						// 
 			// 		}
 			// 	})
 			// }

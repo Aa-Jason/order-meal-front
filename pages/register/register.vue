@@ -15,13 +15,18 @@
 			</picker>
 			
 			<input type="text" class="border-bottom mb-4 uni-input px-0"
-			placeholder="请输入你的手机号" v-model="mobile"
+			placeholder="请输入11位手机号" v-model="mobile"
 			placeholder-class="text-light-muted" 
 			style="border-bottom:1rpx solid #D3D3D3 ;margin: 50rpx 0;padding-bottom: 20rpx;"
 			/>
 			
-			<input type="text" class="border-bottom mb-4 uni-input px-0"
-			placeholder="请输入你的登录密码" v-model="password"
+			<input type="password" class="border-bottom mb-4 uni-input px-0"
+			placeholder="请输入登录密码(至少6位)" v-model="password"
+			placeholder-class="text-light-muted"
+			style="border-bottom:1rpx solid #D3D3D3 ;margin: 50rpx 0;padding-bottom: 20rpx;"
+			/>
+			<input type="password" class="border-bottom mb-4 uni-input px-0"
+			placeholder="请确认登录密码" v-model="againpd"
 			placeholder-class="text-light-muted"
 			style="border-bottom:1rpx solid #D3D3D3 ;margin: 50rpx 0;padding-bottom: 20rpx;"
 			/>
@@ -40,14 +45,29 @@
       return {
         // 收集手机号
         mobile:'',
-        // 验证码
+        againpd:'',
         password:'',
         nickname:'',
 		departmentId:'--请选择--',
-		array:['--请选择--','部门一','部门二','部门三']
+		array:[]
       }
 	  
     },
+	// onLoad() {
+	// 	//#ifndef H5
+	// 	let url = 'http://localhost:8888/xboot/order/getByStaffIDAndDate'
+	// 	//#endif
+		 
+	// 	//#ifdef H5
+	// 	let url = '/dpc/xboot/order/getByStaffIDAndDate'
+	// 	//#endif
+	// 	uni.request({
+	// 		url:url,
+	// 		success:(res)=>{
+	// 			this.array = res.data
+	// 		}
+	// 	})
+	// },
 	methods:{
 		bindPickerChange:function(e){
 		  this.index = e.target.value
@@ -111,18 +131,39 @@
 		  }else{
 			pd = true
 		  }
+		  let agpd=false
+		  if (this.againpd !==this.password) {
+		    uni.showToast({
+		      title: '两次输入不一致，请重新输入',
+		      icon: 'none'
+		    })
+		    return
+		  }else{
+		    agpd = true
+		  }
 			// 注册成功之后回到登录页面
-			if(name&mob&pd&dep){
+			if(name&mob&pd&dep&agpd){
 			uni.showToast({
 			  title: '注册成功',
 			  icon: 'none',
 			  duration:2000
 			})
+			//#ifndef H5
+			let url = 'http://localhost:8888/xboot/auth/register'
+			//#endif
+			 
+			//#ifdef H5
+			let url = '/dpc/xboot/auth/register'
+			//#endif
 			uni.request({
-				url:"",
+				url:url,
+				method:"POST",
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
 				data:{
 					nickname:this.nickname,
-					departmentId:this.departmentId,
+					departmentTitle:this.departmentId,
 					mobile:this.mobile,
 					password:this.password
 				},
@@ -131,6 +172,12 @@
 						url:"/pages/login/login"
 					})
 					
+				},
+				fail(err) {
+					uni.showToast({
+					  title: '注册失败',
+					  duration:2000
+					})
 				}
 			})
 			

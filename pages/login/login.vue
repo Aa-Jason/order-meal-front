@@ -13,7 +13,7 @@
 			style="border-bottom:1rpx solid #D3D3D3 ;margin: 50rpx 0;padding-bottom: 20rpx;"
 			/>
 			
-			<input type="text" class="border-bottom mb-4 uni-input px-0"
+			<input type="password" class="border-bottom mb-4 uni-input px-0"
 			placeholder="请输入密码" v-model="password"
 			placeholder-class="text-light-muted"
 			style="border-bottom:1rpx solid #D3D3D3 ;margin: 50rpx 0;padding-bottom: 20rpx;"
@@ -39,8 +39,19 @@
 		
 		methods:{
 			goLogin(){
+				//#ifndef H5
+				let url = 'http://localhost:8888/xboot/auth/login'
+				//#endif
+				 
+				//#ifdef H5
+				let url = '/dpc/xboot/auth/login'
+				//#endif
 				uni.request({
-					url:'',
+					url:url,
+					method:"POST",
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
 					data:{
 						mobile:this.mobile,
 						password:this.password,
@@ -48,6 +59,7 @@
 					success:(res)=>{
 						// 存储token
 						wx.setStorageSync('token',res.data.token)
+						
 						// 存储姓名
 						// wx.setStorageSync('name',res.data.name)
 						uni.switchTab({

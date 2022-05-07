@@ -342,7 +342,7 @@
 						endDay:this.year + '-' + this.dateTable2[6].date
 					},
 					header:{
-						'token':wx.getStorage('token')
+						'token':wx.getStorageSync('token')
 					},
 					success: (res) => {
 						for (let i = 0;i<7;i++){
@@ -388,7 +388,7 @@
 						endDay:this.year + '-' + this.dateTable2[6].date
 					},
 					header:{
-						'token':wx.getStorage('token')
+						'token':wx.getStorageSync('token')
 					},
 					success: (res) => {
 						for (let i = 0;i<7;i++){
@@ -424,7 +424,7 @@
 						url:url,
 						data:this.tableDate1,
 						header:{
-							'token':wx.getStorage('token')
+							'token':wx.getStorageSync('token')
 						},
 						success: (res) => {
 							uni.showToast({
