@@ -44,25 +44,21 @@
 			let token = wx.getStorageSync('token')
 			if(token.length > 1){
 				this.loginImg = '../../static/loginSuccess.png'
-				// this.getUserInfo()
+				this.getUserInfo()
 			}
-			// this.getUserInfo()
-			// 如果是管理员就显示统计报餐
-			
-			// this.login = wx.getStorage('name')
 		},
 		methods:{
 			goCount(){
 				let token = wx.getStorageSync('token')
-				// if(token.length > 1){
-				// 	uni.navigateTo({
-				// 		url:"/pages/count/count"
-				// 	})
-				// }else{
-				// 	uni.navigateTo({
-				// 		url:"/pages/login/login"
-				// 	})
-				// }
+				if(token.length > 1){
+					uni.navigateTo({
+						url:"/pages/count/count"
+					})
+				}else{
+					uni.navigateTo({
+						url:"/pages/login/login"
+					})
+				}
 				uni.navigateTo({
 						url:"/pages/count/count"
 					})
@@ -86,31 +82,34 @@
 					url:"/pages/login/login"
 				})
 			},
-			// getUserInfo(){
-			// 	//#ifndef H5
-			// 	let url = 'http://localhost:8888/xboot/order'
-			// 	//#endif
+			getUserInfo(){
+				//#ifndef H5
+				let url = 'http://localhost:8888/xboot/user/info'
+				//#endif
 				 
-			// 	//#ifdef H5
-			// 	let url = '/dpc/xboot/order'
-			// 	//#endif
-			// 	uni.request({
-			// 		url:url,
-			// 		method:"GET",
-			// 		header:{
-			// 			'token':wx.getStorage('token')
-			// 		},
-			// 		success(res){
-			// 			// 成功请求到的数据
-			// 			this.login = res.data.name
-			// 			this.power = res.data.power
-						// if(this.power === ''){
-						// 	this.isAdministrators = true
-						// }
-						// 
-			// 		}
-			// 	})
-			// }
+				//#ifdef H5
+				let url = '/dpc/xboot/user/info'
+				//#endif
+				uni.request({
+					url:url,
+					method:"GET",
+					header:{
+						'accessToken':wx.getStorage('token')
+					},
+					success(res){
+						if(res.data.code == '200'){
+							// 成功请求到的数据
+							this.login = res.data.result.username
+							this.power = res.data.result.roles[0].name
+							if(this.power === 'ROLE_ADMIN'){
+								this.isAdministrators = true
+							}
+						}
+						
+						
+					}
+				})
+			}
 		}
 	}
 </script>

@@ -38,6 +38,9 @@
 			"style": {
 				"navigationBarTitleText": "登录"
 			}
+		},
+		{
+			"path": "pages/test"
 		}
 		
 	],

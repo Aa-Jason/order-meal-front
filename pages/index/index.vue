@@ -225,13 +225,19 @@
 				return tabledate
 			}
 		},
-		onReady() {
-			this.getDate1();
+		onLoad() {
 			let num = this.value2.getDay()
 			if (num !== 2) {
 				this.value2 = this.$moment(this.value2)
 					.add(2 - num, 'days')
 			}
+			this.getDate1();
+			// let num = this.value2.getDay()
+			// if (num !== 2) {
+			// 	this.value2 = this.$moment(this.value2)
+			// 		.add(2 - num, 'days')
+			// }
+			
 			
 		},
 		watch: {
@@ -320,14 +326,7 @@
 					.add(4, "days")
 					.format("MM-DD");
 					
-
-			},
-
-			// 获取上一周的日期
-			lastWeek() {
-				this.value2 = this.$moment(this.value2)
-					.subtract(7, "days").toDate()
-				this.getDate1()
+					
 				//#ifndef H5
 				let url = 'http://localhost:8888/xboot/order/getByStaffIDAndDate'
 				//#endif
@@ -363,6 +362,50 @@
 						
 					}
 				})
+					
+
+			},
+
+			// 获取上一周的日期
+			lastWeek() {
+				this.value2 = this.$moment(this.value2)
+					.subtract(7, "days").toDate()
+				this.getDate1()
+				// //#ifndef H5
+				// let url = 'http://localhost:8888/xboot/order/getByStaffIDAndDate'
+				// //#endif
+				 
+				// //#ifdef H5
+				// let url = '/dpc/xboot/order/getByStaffIDAndDate'
+				// //#endif
+				// uni.request({
+				// 	url:url,
+				// 	data:{
+				// 		startDate:this.year + '-' + this.dateTable2[0].date,
+				// 		endDate:this.year + '-' + this.dateTable2[6].date
+				// 	},
+				// 	header:{
+				// 		'accessToken':wx.getStorageSync('token')
+				// 	},
+				// 	success: (res) => {
+				// 		if(res.data.code == '200'){
+				// 			for (let i = 0;i<7;i++){
+				// 				if(res.data.result[i]!==null){
+				// 					this.dateTable2[i].breakfast = res.data.result[i].breakfast == 1?true:false
+				// 					this.dateTable2[i].lunch = res.data.result[i].lunch == 1?true:false
+				// 					this.dateTable2[i].dinner = res.data.result[i].dinner == 1?true:false
+									
+				// 				}else{
+				// 					this.dateTable2[i].breakfast = false
+				// 					this.dateTable2[i].lunch = false
+				// 					this.dateTable2[i].dinner = false
+				// 				}
+				// 			}
+				// 		}
+						
+						
+				// 	}
+				// })
 				
 				// 向服务器请求上一周的早午晚餐数据
 				// 要判断一下数据库返回的数组是不是空的
@@ -377,40 +420,40 @@
 				this.value2 = this.$moment(this.value2)
 					.add(7, "days").toDate()
 				this.getDate1()
-				//#ifndef H5
-				let url = 'http://localhost:8888/xboot/order/getByStaffIDAndDate'
-				//#endif
+				// //#ifndef H5
+				// let url = 'http://localhost:8888/xboot/order/getByStaffIDAndDate'
+				// //#endif
 				 
-				//#ifdef H5
-				let url = '/dpc/xboot/order/getByStaffIDAndDate'
-				//#endif
-				uni.request({
-					url:url,
-					data:{
-						startDate:this.year + '-' + this.dateTable2[0].date,
-						endDate:this.year + '-' + this.dateTable2[6].date
-					},
-					header:{
-						'accessToken':wx.getStorageSync('token')
-					},
-					success: (res) => {
-						if(res.data.code == '200'){
-							for (let i = 0;i<7;i++){
-								if(res.data.result[i]!==null){
-									this.dateTable2[i].breakfast = res.data.result[i].breakfast == 1?true:false
-									this.dateTable2[i].lunch = res.data.result[i].lunch == 1?true:false
-									this.dateTable2[i].dinner = res.data.result[i].dinner == 1?true:false
+				// //#ifdef H5
+				// let url = '/dpc/xboot/order/getByStaffIDAndDate'
+				// //#endif
+				// uni.request({
+				// 	url:url,
+				// 	data:{
+				// 		startDate:this.year + '-' + this.dateTable2[0].date,
+				// 		endDate:this.year + '-' + this.dateTable2[6].date
+				// 	},
+				// 	header:{
+				// 		'accessToken':wx.getStorageSync('token')
+				// 	},
+				// 	success: (res) => {
+				// 		if(res.data.code == '200'){
+				// 			for (let i = 0;i<7;i++){
+				// 				if(res.data.result[i]!==null){
+				// 					this.dateTable2[i].breakfast = res.data.result[i].breakfast == 1?true:false
+				// 					this.dateTable2[i].lunch = res.data.result[i].lunch == 1?true:false
+				// 					this.dateTable2[i].dinner = res.data.result[i].dinner == 1?true:false
 									
-								}else{
-									this.dateTable2[i].breakfast = false
-									this.dateTable2[i].lunch = false
-									this.dateTable2[i].dinner = false
-								}
-							}
-						}
+				// 				}else{
+				// 					this.dateTable2[i].breakfast = false
+				// 					this.dateTable2[i].lunch = false
+				// 					this.dateTable2[i].dinner = false
+				// 				}
+				// 			}
+				// 		}
 						
-					}
-				})
+				// 	}
+				// })
 
 			},
 			orderMeal() {

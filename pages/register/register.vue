@@ -3,8 +3,14 @@
 		<view class="p-5" style="margin: 50rpx;">
 			<view class="font-big mb-5" style="font-size: 60rpx;">注册新用户</view>
 			
+			<!-- <input type="text" class="border-bottom mb-4 uni-input px-0"
+			placeholder="请输入用户名" v-model="username"
+			placeholder-class="text-light-muted" 
+			style="border-bottom:1rpx solid #D3D3D3 ;margin: 50rpx 0;padding-bottom: 20rpx;"
+			/> -->
+			
 			<input type="text" class="border-bottom mb-4 uni-input px-0"
-			placeholder="请输入你的姓名" v-model="username"
+			placeholder="请输入你的姓名" v-model="nickname"
 			placeholder-class="text-light-muted" 
 			style="border-bottom:1rpx solid #D3D3D3 ;margin: 50rpx 0;padding-bottom: 20rpx;"
 			/>
@@ -48,34 +54,52 @@
         againpd:'',
         password:'',
         username:'',
+		nickname:'',
 		departmentId:'--请选择--',
 		array:[]
       }
 	  
     },
-	// onLoad() {
-	// 	//#ifndef H5
-	// 	let url = 'http://localhost:8888/xboot/order/getByStaffIDAndDate'
-	// 	//#endif
-		 
-	// 	//#ifdef H5
-	// 	let url = '/dpc/xboot/order/getByStaffIDAndDate'
-	// 	//#endif
-	// 	uni.request({
-	// 		url:url,
-	// 		success:(res)=>{
-	// 			this.array = res.data
-	// 		}
-	// 	})
-	// },
+	onLoad() {
+		this.getDepartment()
+	},
 	methods:{
+		getDepartment(){
+				//#ifndef H5
+				let url = 'http://localhost:8888/xboot/order/getByStaffIDAndDate'
+				//#endif
+				 
+				//#ifdef H5
+				let url = '/dpc/xboot/order/getByStaffIDAndDate'
+				//#endif
+				uni.request({
+					url:url,
+					success:(res)=>{
+						if(res.data.code == '200'){
+							this.array = res.data.result
+						}
+						
+					}
+				})
+		},
 		bindPickerChange:function(e){
 		  this.index = e.target.value
 		  this.departmentId = this.array[this.index]
 		},
 		register(){
-			
-		  let name = false
+		  
+		  // let username = false
+		  // if(!this.username){
+				// uni.showToast({
+				//   title: '请输入用户名',
+				//   icon: 'none'
+				// })
+				// return
+		  // }else{
+		  // 	    username = true
+		  // }
+		  
+		  let nickname = false
 		  if(!this.nickname){
 			uni.showToast({
 			  title: '请输入姓名',
@@ -83,7 +107,7 @@
 			})
 			return
 		  }else{
-			  name = true
+			  nickname = true
 		  }
 		  
 		  let dep = false
@@ -142,7 +166,7 @@
 		    agpd = true
 		  }
 			// 注册成功之后回到登录页面
-			if(name&mob&pd&dep&agpd){
+			if(nickname&mob&pd&dep&agpd){
 			uni.showToast({
 			  title: '注册成功',
 			  icon: 'none',
@@ -162,7 +186,8 @@
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				data:{
-					username:this.username,
+					
+					nickname:this.nickname,
 					departmentTitle:this.departmentId,
 					mobile:this.mobile,
 					password:this.password

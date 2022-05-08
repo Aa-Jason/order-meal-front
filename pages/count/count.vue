@@ -159,23 +159,24 @@
 					if(date&name){
 						// 得到后台返回的数据 并给data里的数据赋值
 						//#ifndef H5
-						let url = 'http://localhost:8888/xboot/order/getSumByDate'
+						let url = 'http://localhost:8888/xboot/order/getByConditions'
 						//#endif
 						 
 						//#ifdef H5
-						let url = '/dpc/xboot/order/getSumByDate'
+						let url = '/dpc/xboot/order/getByConditions'
 						//#endif
 						uni.request({
 							url:url,
-							method:"GET",
+							method:"POST",
 							data:{
-								name:this.name,
+								nickname:this.name,
 								startDate:this.startDate,
 								endDate:this.endDate,
 								departmentTitle:department
 							},
 							header:{
-								'accessToken':wx.getStorageSync('token')
+								'accessToken':wx.getStorageSync('token'),
+								'content-type': 'application/x-www-form-urlencoded'
 							},
 							success(res){
 								if(res.data.code == '200'){
