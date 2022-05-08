@@ -194,6 +194,7 @@
 					password:this.password
 				},
 				success: (res) => {
+					console.log(res)
 					if(res.data.code == '200'){
 						uni.navigateTo({
 							url:"/pages/login/login"

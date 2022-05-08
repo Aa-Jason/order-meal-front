@@ -211,6 +211,7 @@
 		    font-size: 36rpx;
 			display: flex;
 			overflow-y: scroll;
+			font-size: 30rpx;
 		  }
 		
 		  .item {

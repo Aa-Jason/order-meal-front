@@ -212,10 +212,10 @@
 				let tabledate = []
 				for (let i = 0;i < 7;i++){
 					let data = {
-						data:this.year + '-' + this.dateTable2[i].date,
-						breakfast:this.dateTable2[i].breakfast==true?1:0,
-						lunch:this.dateTable2[i].lunch==true?1:0,
-						dinner:this.dateTable2[i].lunch==true?1:0
+						'date':this.year + '-' + this.dateTable2[i].date,
+						'breakfast':this.dateTable2[i].breakfast==true?1:0,
+						'lunch':this.dateTable2[i].lunch==true?1:0,
+						'dinner':this.dateTable2[i].lunch==true?1:0
 						
 					}
 					
@@ -467,17 +467,19 @@
 				let url = '/dpc/xboot/order/addOrder'
 				//#endif
 				let token = wx.getStorageSync('token')
+				
+				
 				if(token.length > 1){
 					uni.request({
 						url:url,
 						dataType:"json",
 						data:{
-							orders:this.array2List([{date:'2022-05-01',breakfast:0,lunch:1,dinner:1}],1)
+							"orders":this.tableDate1
 						},
 						method:"POST",
 						header:{
 							'accessToken':wx.getStorageSync('token'),
-							'content-type': 'application/x-www-form-urlencoded'
+							'content-type': 'application/json'
 						},
 						success: (res) => {
 							console.log(res)

@@ -39,7 +39,7 @@
 					</text>
 				</view >
 				
-				<view v-for="(everyDay,index) in dataTable" :key="index" class="text item" style="display: flex; overflow-y: scroll;  ">
+				<view v-for="(everyDay,index) in dataTable" :key="index" class="text item" style="display: flex; overflow-y: scroll;font-size: 30rpx;">
 					<text style="flex: 1;">
 						{{everyDay[0]}}
 					</text >
@@ -134,6 +134,7 @@
 					// 传要查询的日期过去
 					this.dataTable = []
 					let department = ''
+					
 					if (this.departmentTitle !== '请选择统计部门'){
 						department = this.departmentTitle
 					}
@@ -148,7 +149,7 @@
 						date = true
 					}
 					let name = false
-					if(this.name && !this.department){
+					if(this.name && !this.departmentTitle){
 						uni.showToast({
 						  title: '请选择查询姓名所属部门',
 						  icon:'none',
@@ -180,6 +181,7 @@
 								'content-type': 'application/x-www-form-urlencoded'
 							},
 							success:(res)=>{
+								console.log(res)
 								if(res.data.code == '200'){
 									
 									
@@ -191,9 +193,10 @@
 											everyday[1] = res.data.result[i].breakfast
 											everyday[2] = res.data.result[i].lunch
 											everyday[3] = res.data.result[i].dinner
-											console.log(this.dataTable)
-											console.log(everyday)
-											this.dataTable.push(everyday)
+											if(everyday[1] !== 0 || everyday[2] !== 0 || everyday[3] !== 0 ){
+												this.dataTable.push(everyday)
+											}
+											
 										}
 										
 										
