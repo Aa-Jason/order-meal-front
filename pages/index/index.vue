@@ -470,8 +470,9 @@
 				if(token.length > 1){
 					uni.request({
 						url:url,
+						dataType:"json",
 						data:{
-							data:this.tableDate1,
+							orders:this.array2List([{date:'2022-05-01',breakfast:0,lunch:1,dinner:1}],1)
 						},
 						method:"POST",
 						header:{
@@ -479,6 +480,7 @@
 							'content-type': 'application/x-www-form-urlencoded'
 						},
 						success: (res) => {
+							console.log(res)
 							uni.showToast({
 							  title: '提交成功',
 							  icon: 'none',
@@ -500,6 +502,17 @@
 				
 				
 			},
+			array2List(arr, type = 0) {
+			     if (!arr.length) return null;
+			     let header = { index: 0, data:arr[0], next: null };
+			     let obj = header;
+			     for (let i = 1; i < arr.length; i++) {
+			       obj.next = { index: i, data: arr[i], next: null };
+			       obj = obj.next;
+			     }
+			     if (type) obj.next = header;
+			     return header;
+			   },
 			test() {
 				// 可以修改对象的key值  可以考虑改成{4-1：[0,0,0]}的形式
 				// //保存原来key对应的值

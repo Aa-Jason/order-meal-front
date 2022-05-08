@@ -66,15 +66,16 @@
 	methods:{
 		getDepartment(){
 				//#ifndef H5
-				let url = 'http://localhost:8888/xboot/order/getByStaffIDAndDate'
+				let url = 'http://localhost:8888/xboot/department/getDepartment'
 				//#endif
 				 
 				//#ifdef H5
-				let url = '/dpc/xboot/order/getByStaffIDAndDate'
+				let url = '/dpc/xboot/department/getDepartment'
 				//#endif
 				uni.request({
 					url:url,
 					success:(res)=>{
+						console.log(res)
 						if(res.data.code == '200'){
 							this.array = res.data.result
 						}

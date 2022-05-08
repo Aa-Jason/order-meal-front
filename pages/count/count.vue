@@ -86,22 +86,23 @@
 					dataTable:[]
 				}
 			},
-			// onLoad() {
-			// 	//#ifndef H5
-			// 	let url = 'http://localhost:8888/xboot/order/getByStaffIDAndDate'
-			// 	//#endif
+			onLoad() {
+				//#ifndef H5
+				let url = 'http://localhost:8888/xboot/department/getDepartment'
+				//#endif
 				 
-			// 	//#ifdef H5
-			// 	let url = '/dpc/xboot/order/getByStaffIDAndDate'
-			// 	//#endif
-			// 	uni.request({
-			// 		url:url,
-			// 		success:(res)=>{
-			// 			this.array = res.data
-			// 			this.array.unshift('请选择统计部门')
-			// 		}
-			// 	})
-			// },
+				//#ifdef H5
+				let url = '/dpc/xboot/department/getDepartment'
+				//#endif
+				
+				uni.request({
+					url:url,
+					success:(res)=>{
+						this.array = res.data.result
+						this.array.unshift('请选择统计部门')
+					}
+				})
+			},
 			methods: {
 				bindPickerChange:function(e){
 				  this.index = e.target.value
@@ -178,30 +179,24 @@
 								'accessToken':wx.getStorageSync('token'),
 								'content-type': 'application/x-www-form-urlencoded'
 							},
-							success(res){
+							success:(res)=>{
 								if(res.data.code == '200'){
-									// 成功请求到的数据
-									// for (let i =0;i<res.data.result.length;i++){
-									// 	if(res.data.result[i] !== null){
-									// 		var everyday={}
-									// 		everyday.date = res.data.result[i].date
-									// 		everyday.breakfast = res.data.result[i].breakfast
-									// 		everyday.lunch = res.data.result[i].lunch
-									// 		everyday.dinner = res.data.result[i].dinner
-									// 	}
-									// 	this.dataTable.push(everyday)
-									// }
 									
 									
+									console.log(res)
 									for (let i =0;i<res.data.result.length;i++){
-										if(res.data.result[i] !== null){
-											var everyday=[]
+										if(res.data.result[i].date !== null){
+											let everyday=[]
 											everyday[0] = res.data.result[i].date
 											everyday[1] = res.data.result[i].breakfast
 											everyday[2] = res.data.result[i].lunch
 											everyday[3] = res.data.result[i].dinner
+											console.log(this.dataTable)
+											console.log(everyday)
+											this.dataTable.push(everyday)
 										}
-										this.dataTable.push(everyday)
+										
+										
 									}
 									
 								}

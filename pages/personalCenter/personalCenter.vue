@@ -32,7 +32,7 @@
 	export default {
 		data(){
 			return {
-				isAdministrators:true,
+				isAdministrators:false,
 				login:"请登录",
 				loginImg:'../../static/login.png',
 				isLogin:false,
@@ -43,6 +43,43 @@
 		onLoad() {
 			let token = wx.getStorageSync('token')
 			if(token.length > 1){
+				
+				this.loginImg = '../../static/loginSuccess.png'
+				this.login = 'aaa'
+				//#ifndef H5
+				let url = 'http://localhost:8888/xboot/user/info'
+				//#endif
+				 
+				//#ifdef H5
+				let url = '/dpc/xboot/user/info'
+				//#endif
+				uni.request({
+					url:url,
+					method:"GET",
+					header:{
+						'accessToken':wx.getStorageSync('token')
+					},
+					success:(res)=>{
+						console.log(res)
+						if(res.data.code == '200'){
+							// 成功请求到的数据
+							this.login = res.data.result.nickname
+							this.power = res.data.result.roles[0].name
+							if(this.power === 'ROLE_ADMIN'){
+								this.isAdministrators = true
+							}
+						}
+						
+						
+					}
+			})
+			console.log(this.login)
+			}
+		},
+		onShow() {
+			let token = wx.getStorageSync('token')
+			if(token.length > 1){
+				
 				this.loginImg = '../../static/loginSuccess.png'
 				this.getUserInfo()
 			}
@@ -83,32 +120,8 @@
 				})
 			},
 			getUserInfo(){
-				//#ifndef H5
-				let url = 'http://localhost:8888/xboot/user/info'
-				//#endif
-				 
-				//#ifdef H5
-				let url = '/dpc/xboot/user/info'
-				//#endif
-				uni.request({
-					url:url,
-					method:"GET",
-					header:{
-						'accessToken':wx.getStorage('token')
-					},
-					success(res){
-						if(res.data.code == '200'){
-							// 成功请求到的数据
-							this.login = res.data.result.username
-							this.power = res.data.result.roles[0].name
-							if(this.power === 'ROLE_ADMIN'){
-								this.isAdministrators = true
-							}
-						}
-						
-						
-					}
-				})
+				
+				
 			}
 		}
 	}

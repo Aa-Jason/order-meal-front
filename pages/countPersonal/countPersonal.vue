@@ -134,29 +134,21 @@
 						header:{
 							'accessToken':wx.getStorageSync('token')
 						},
-						success(res){
+						success:(res)=>{
 							if(res.data.code == '200'){
-								// 成功请求到的数据
-								// for (let i =0;i<res.data.result.length;i++){
-								// 	if(res.data.result[i] !== null){
-								// 		var everyday={}
-								// 		everyday.date = res.data.result[i].date
-								// 		everyday.breakfast = res.data.result[i].breakfast
-								// 		everyday.lunch = res.data.result[i].lunch
-								// 		everyday.dinner = res.data.result[i].dinner
-								// 	}
-								// 	this.dataTable.push(everyday)
-								// }
+								console.log(res.data.result)
 								
 								for (let i =0;i<res.data.result.length;i++){
 									if(res.data.result[i] !== null){
-										var everyday=[]
+										let everyday=[]
 										everyday[0] = res.data.result[i].date
 										everyday[1] = res.data.result[i].breakfast
 										everyday[2] = res.data.result[i].lunch
 										everyday[3] = res.data.result[i].dinner
+										this.dataTable.push(everyday)
 									}
-									this.dataTable.push(everyday)
+									
+									
 								}
 							}
 							
