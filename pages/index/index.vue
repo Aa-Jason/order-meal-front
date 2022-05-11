@@ -14,17 +14,7 @@
 					<text @click="nextWeek">下一周 </text>
 				</div>
 		</view>
-		<!-- <button>
-					{{dateTable[0].date.monday}} - {{dateTable[6].date.sunday}}
-				</button>
-				<button @click="lastWeek">
-					上一周
-				</button>
-				
-				<button @click="nextWeek">
-					下一周
-				</button> -->
-
+		
 		<!-- 表头 -->
 		<view class="tableHeader" style="display: flex;">
 				<div style='flex:1;'>
@@ -50,64 +40,6 @@
 				</div>
 			
 		</view>
-		<!-- 表格主体 -->
-		<!-- <view class="table">
-			<view class="tableBody" v-for="(everyDay,index) in dateTable" :key="index" style="display: flex;">
-					<div style="line-height: 40rpx;padding-top: 15rpx;padding-bottom: 15rpx;flex: 1;">
-						<text>{{everyDay.week}}</text>
-						<br />
-						<text class="date">{{everyDay.date[Object.keys(everyDay.date)[0]]}}</text>
-
-					</div>
-					<div style="text-align: center;line-height: 110rpx;flex: 1;">
-						<checkbox  :checked="everyDay.meal[0]" style="transform:scale(0.7);" color="#0099ff" :disabled="everyDay.date[Object.keys(everyDay.date)[0]] <= $moment(new Date()).format('MM-DD') ? true:false"
-						@click="update(index,0)">
-						</checkbox>
-					</div>
-					<div style="text-align: center;line-height: 110rpx;flex: 1;">
-						<checkbox  :checked="everyDay.meal[1]" style="transform:scale(0.7);" color="#0099ff" :disabled="everyDay.date[Object.keys(everyDay.date)[0]] <= $moment(new Date()).format('MM-DD') ? true:false"
-						@click="update(index,1)">
-						</checkbox>
-					</div>
-				
-					<div style="text-align: center;line-height: 110rpx;flex: 1;">
-						<checkbox value="" :checked="everyDay.meal[2]" style="transform:scale(0.7);" color="#0099ff" :disabled="everyDay.date[Object.keys(everyDay.date)[0]] <= $moment(new Date()).format('MM-DD') ? true:false"
-						@click="update(index,2)">
-						</checkbox>
-					</div>
-				
-			</view>
-		</view> -->
-		
-		
-		<!-- <view class="table">
-			<view class="tableBody" v-for="(everyDay,index) in dateTable1" :key="index">
-					<div class="weekDate">
-						<text>{{weekData[index]}}</text>
-						<br />
-						<text class="date">{{everyDay[0]}}</text>
-		
-					</div>
-					<div class="check">
-						<checkbox  :checked="everyDay[1]" style="transform:scale(0.7);" color="#0099ff" :disabled="everyDay[0] <= $moment(new Date()).format('MM-DD') ? true:false"
-						@click="update(index,1)">
-						</checkbox>
-					</div>
-					<div class="check">
-						<checkbox  :checked="everyDay[2]" style="transform:scale(0.7);" color="#0099ff" :disabled="everyDay[0]<= $moment(new Date()).format('MM-DD') ? true:false"
-						@click="update(index,2)">
-						</checkbox>
-					</div>
-				
-					<div class="check">
-						<checkbox value="" :checked="everyDay[3]" style="transform:scale(0.7);" color="#0099ff" :disabled="everyDay[0] <= $moment(new Date()).format('MM-DD') ? true:false"
-						@click="update(index,3)">
-						</checkbox>
-					</div>
-				
-			</view>
-		</view> -->
-		
 		
 		
 		<view class="table">
@@ -156,6 +88,7 @@
 				year: '',
 				week: '',
 				arrDate:[],
+				username:'',
 				weekData:['周一','周二','周三','周四','周五','周六','周日'],
 				
 				dateTable2: [{
@@ -234,11 +167,11 @@
 					.add(2 - num, 'days')
 			}
 			this.getDate1();
-			// let num = this.value2.getDay()
-			// if (num !== 2) {
-			// 	this.value2 = this.$moment(this.value2)
-			// 		.add(2 - num, 'days')
-			// }
+			
+			// 检查存储的token是否还有效
+			this.getUserInfo()
+			
+			
 			
 			
 		},
@@ -263,49 +196,7 @@
 					.format("YYYY")
 				this.week = this.$moment(this.value2)
 					.format("WW")
-				// this.dateTable[0].date.monday = this.$moment(this.value2)
-				// 	.subtract(1, "days")
-				// 	.format("MM-DD"); //获取周一
-				// this.dateTable[6].date.sunday = this.$moment(this.value2)
-				// 	.add(5, "days")
-				// 	.format("MM-DD"); //获取周日
-				// this.dateTable[1].date.Tuesday = this.$moment(this.value2)
-				// 	.format("MM-DD");
-				// this.dateTable[2].date.Wednesday = this.$moment(this.value2)
-				// 	.add(1, "days")
-				// 	.format("MM-DD");
-				// this.dateTable[3].date.Thursday = this.$moment(this.value2)
-				// 	.add(2, "days")
-				// 	.format("MM-DD");
-				// this.dateTable[4].date.Friday = this.$moment(this.value2)
-				// 	.add(3, "days")
-				// 	.format("MM-DD");
-				// this.dateTable[5].date.Saturday = this.$moment(this.value2)
-				// 	.add(4, "days")
-				// 	.format("MM-DD");
-					
-					
-				// this.dateTable1[0][0] = this.$moment(this.value2)
-				// 	.subtract(1, "days")
-				// 	.format("MM-DD"); //获取周一
-				// this.dateTable1[6][0] = this.$moment(this.value2)
-				// 	.add(5, "days")
-				// 	.format("MM-DD"); //获取周日
-				// this.dateTable1[1][0] = this.$moment(this.value2)
-				// 	.format("MM-DD");
-				// this.dateTable1[2][0] = this.$moment(this.value2)
-				// 	.add(1, "days")
-				// 	.format("MM-DD");
-				// this.dateTable1[3][0] = this.$moment(this.value2)
-				// 	.add(2, "days")
-				// 	.format("MM-DD");
-				// this.dateTable1[4][0] = this.$moment(this.value2)
-				// 	.add(3, "days")
-				// 	.format("MM-DD");
-				// this.dateTable1[5][0] = this.$moment(this.value2)
-				// 	.add(4, "days")
-				// 	.format("MM-DD");
-					
+				
 					
 				this.dateTable2[0].date = this.$moment(this.value2)
 					.subtract(1, "days")
@@ -375,41 +266,7 @@
 				this.value2 = this.$moment(this.value2)
 					.subtract(7, "days").toDate()
 				this.getDate1()
-				// //#ifndef H5
-				// let url = 'http://localhost:8888/xboot/order/getByStaffIDAndDate'
-				// //#endif
-				 
-				// //#ifdef H5
-				// let url = '/dpc/xboot/order/getByStaffIDAndDate'
-				// //#endif
-				// uni.request({
-				// 	url:url,
-				// 	data:{
-				// 		startDate:this.year + '-' + this.dateTable2[0].date,
-				// 		endDate:this.year + '-' + this.dateTable2[6].date
-				// 	},
-				// 	header:{
-				// 		'accessToken':wx.getStorageSync('token')
-				// 	},
-				// 	success: (res) => {
-				// 		if(res.data.code == '200'){
-				// 			for (let i = 0;i<7;i++){
-				// 				if(res.data.result[i]!==null){
-				// 					this.dateTable2[i].breakfast = res.data.result[i].breakfast == 1?true:false
-				// 					this.dateTable2[i].lunch = res.data.result[i].lunch == 1?true:false
-				// 					this.dateTable2[i].dinner = res.data.result[i].dinner == 1?true:false
-									
-				// 				}else{
-				// 					this.dateTable2[i].breakfast = false
-				// 					this.dateTable2[i].lunch = false
-				// 					this.dateTable2[i].dinner = false
-				// 				}
-				// 			}
-				// 		}
-						
-						
-				// 	}
-				// })
+				
 				
 				// 向服务器请求上一周的早午晚餐数据
 				// 要判断一下数据库返回的数组是不是空的
@@ -424,40 +281,7 @@
 				this.value2 = this.$moment(this.value2)
 					.add(7, "days").toDate()
 				this.getDate1()
-				// //#ifndef H5
-				// let url = 'http://localhost:8888/xboot/order/getByStaffIDAndDate'
-				// //#endif
-				 
-				// //#ifdef H5
-				// let url = '/dpc/xboot/order/getByStaffIDAndDate'
-				// //#endif
-				// uni.request({
-				// 	url:url,
-				// 	data:{
-				// 		startDate:this.year + '-' + this.dateTable2[0].date,
-				// 		endDate:this.year + '-' + this.dateTable2[6].date
-				// 	},
-				// 	header:{
-				// 		'accessToken':wx.getStorageSync('token')
-				// 	},
-				// 	success: (res) => {
-				// 		if(res.data.code == '200'){
-				// 			for (let i = 0;i<7;i++){
-				// 				if(res.data.result[i]!==null){
-				// 					this.dateTable2[i].breakfast = res.data.result[i].breakfast == 1?true:false
-				// 					this.dateTable2[i].lunch = res.data.result[i].lunch == 1?true:false
-				// 					this.dateTable2[i].dinner = res.data.result[i].dinner == 1?true:false
-									
-				// 				}else{
-				// 					this.dateTable2[i].breakfast = false
-				// 					this.dateTable2[i].lunch = false
-				// 					this.dateTable2[i].dinner = false
-				// 				}
-				// 			}
-				// 		}
-						
-				// 	}
-				// })
+				
 
 			},
 			orderMeal() {
@@ -473,7 +297,7 @@
 				let token = wx.getStorageSync('token')
 				
 				
-				if(token.length > 1){
+				if(this.username){
 					uni.request({
 						url:url,
 						dataType:"json",
@@ -508,31 +332,34 @@
 				
 				
 			},
-			array2List(arr, type = 0) {
-			     if (!arr.length) return null;
-			     let header = { index: 0, data:arr[0], next: null };
-			     let obj = header;
-			     for (let i = 1; i < arr.length; i++) {
-			       obj.next = { index: i, data: arr[i], next: null };
-			       obj = obj.next;
-			     }
-			     if (type) obj.next = header;
-			     return header;
-			   },
-			test() {
-				// 可以修改对象的key值  可以考虑改成{4-1：[0,0,0]}的形式
-				// //保存原来key对应的值
-				// let departmentId= department.id;
-			 // //删除key
-				// delete department.id
-				// //增加key
-				// department.departmentId=departmentId
-
-
-				// 得到key值
-				// Object.keys(obj)
-
+			getUserInfo(){
+				//#ifndef H5
+					let url = 'http://localhost:8888/xboot/user/info'
+					//#endif
+					 
+					//#ifdef H5
+					let url = '/dpc/xboot/user/info'
+					//#endif
+					uni.request({
+						url:url,
+						method:"GET",
+						header:{
+							'accessToken':wx.getStorageSync('token')
+						},
+						success:(res)=>{
+							console.log(res)
+							if(res.data.code == '200'){
+								// 成功请求到的数据
+								this.username = res.data.result.nickname
+								
+							}
+							
+							
+						}
+				})
 			},
+			
+			
 			update(index,num){
 				if(this.dateTable2[index].date > this.$moment(new Date()).format('MM-DD')){
 					if(num===1){

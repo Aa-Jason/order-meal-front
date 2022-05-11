@@ -41,53 +41,14 @@
 			}
 		},
 		onLoad() {
-			let token = wx.getStorageSync('token')
-			if(token.length > 1){
-				
-				this.loginImg = '../../static/loginSuccess.png'
-				this.login = 'aaa'
-				//#ifndef H5
-				let url = 'http://localhost:8888/xboot/user/info'
-				//#endif
-				 
-				//#ifdef H5
-				let url = '/dpc/xboot/user/info'
-				//#endif
-				uni.request({
-					url:url,
-					method:"GET",
-					header:{
-						'accessToken':wx.getStorageSync('token')
-					},
-					success:(res)=>{
-						console.log(res)
-						if(res.data.code == '200'){
-							// 成功请求到的数据
-							this.login = res.data.result.nickname
-							this.power = res.data.result.roles[0].name
-							if(this.power === 'ROLE_ADMIN'){
-								this.isAdministrators = true
-							}
-						}
-						
-						
-					}
-			})
-			console.log(this.login)
-			}
+			this.getUserInfo()
+			
 		},
-		// onShow() {
-		// 	let token = wx.getStorageSync('token')
-		// 	if(token.length > 1){
-				
-		// 		this.loginImg = '../../static/loginSuccess.png'
-		// 		this.getUserInfo()
-		// 	}
-		// },
+		
 		methods:{
 			goCount(){
 				let token = wx.getStorageSync('token')
-				if(token.length > 1){
+				if(this.login !== '请登录'){
 					uni.navigateTo({
 						url:"/pages/count/count"
 					})
@@ -96,14 +57,12 @@
 						url:"/pages/login/login"
 					})
 				}
-				uni.navigateTo({
-						url:"/pages/count/count"
-					})
+				
 				
 			},
 			goCountPersonal(){
 				let token = wx.getStorageSync('token')
-				if(token.length > 1){
+				if(this.login !== '请登录'){
 					uni.navigateTo({
 						url:"/pages/countPersonal/countPersonal"
 					})
@@ -116,7 +75,7 @@
 			},
 			goLogin(){
 				let token = wx.getStorageSync('token')
-				if(token.length < 1){
+				if(this.login == '请登录'){
 					uni.navigateTo({
 						url:"/pages/login/login"
 					})
@@ -124,9 +83,36 @@
 				
 			},
 			getUserInfo(){
-				
-				
-			}
+			    this.loginImg = '../../static/loginSuccess.png'
+			    	
+			    	//#ifndef H5
+			    	let url = 'http://localhost:8888/xboot/user/info'
+			    	//#endif
+			    	 
+			    	//#ifdef H5
+			    	let url = '/dpc/xboot/user/info'
+			    	//#endif
+			    	uni.request({
+			    		url:url,
+			    		method:"GET",
+			    		header:{
+			    			'accessToken':wx.getStorageSync('token')
+			    		},
+			    		success:(res)=>{
+			    			console.log(res)
+			    			if(res.data.code == '200'){
+			    				// 成功请求到的数据
+			    				this.login = res.data.result.nickname
+			    				this.power = res.data.result.roles[0].name
+			    				if(this.power === 'ROLE_ADMIN'){
+			    					this.isAdministrators = true
+			    				}
+			    			}
+			    			
+			    			
+			    		}
+			    })
+			   }
 		}
 	}
 </script>
