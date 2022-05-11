@@ -76,14 +76,14 @@
 			console.log(this.login)
 			}
 		},
-		onShow() {
-			let token = wx.getStorageSync('token')
-			if(token.length > 1){
+		// onShow() {
+		// 	let token = wx.getStorageSync('token')
+		// 	if(token.length > 1){
 				
-				this.loginImg = '../../static/loginSuccess.png'
-				this.getUserInfo()
-			}
-		},
+		// 		this.loginImg = '../../static/loginSuccess.png'
+		// 		this.getUserInfo()
+		// 	}
+		// },
 		methods:{
 			goCount(){
 				let token = wx.getStorageSync('token')
@@ -115,9 +115,13 @@
 				
 			},
 			goLogin(){
-				uni.navigateTo({
-					url:"/pages/login/login"
-				})
+				let token = wx.getStorageSync('token')
+				if(token.length < 1){
+					uni.navigateTo({
+						url:"/pages/login/login"
+					})
+				}
+				
 			},
 			getUserInfo(){
 				

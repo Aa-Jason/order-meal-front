@@ -62,9 +62,9 @@
 				
 				
 			</view>
-			<button v-if="showSum" class="excel">
+			<!-- <button v-if="showSum" class="excel">
 				导出表格
-			</button>
+			</button> -->
 		</view>
 		
 	</view>
@@ -137,14 +137,14 @@
 						success:(res)=>{
 							if(res.data.code == '200'){
 								console.log(res.data.result)
-								
-								for (let i =0;i<res.data.result.length;i++){
-									if(res.data.result[i] !== null){
+								let len = res.data.result.length
+								for (let i =0;i<len;i++){
+									if(res.data.result[len-1-i] !== null){
 										let everyday=[]
-										everyday[0] = res.data.result[i].date
-										everyday[1] = res.data.result[i].breakfast
-										everyday[2] = res.data.result[i].lunch
-										everyday[3] = res.data.result[i].dinner
+										everyday[0] = res.data.result[len-1-i].date
+										everyday[1] = res.data.result[len-1-i].breakfast
+										everyday[2] = res.data.result[len-1-i].lunch
+										everyday[3] = res.data.result[len-1-i].dinner
 										this.dataTable.push(everyday)
 									}
 									

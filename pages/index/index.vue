@@ -119,7 +119,7 @@
 		
 					</div>
 					<div class="check">
-						<checkbox  :checked="everyDay.breakfast" style="transform:scale(0.7);" color="#0099ff" :disabled="everyDay.date <= $moment(new Date()).format('MM-DD') ? true:false"
+						<checkbox  :checked="everyDay.breakfast" style="transform:scale(0.7);" color="#0099ff" :disabled="everyDay.date <= $moment(new Date()).format('MM-DD') ? true:false "
 						@click="update(index,1)">
 						</checkbox>
 					</div>
@@ -155,7 +155,7 @@
 				value2: new Date(),
 				year: '',
 				week: '',
-				
+				arrDate:[],
 				weekData:['周一','周二','周三','周四','周五','周六','周日'],
 				
 				dateTable2: [{
@@ -211,15 +211,17 @@
 			
 				let tabledate = []
 				for (let i = 0;i < 7;i++){
-					let data = {
-						'date':this.year + '-' + this.dateTable2[i].date,
-						'breakfast':this.dateTable2[i].breakfast==true?1:0,
-						'lunch':this.dateTable2[i].lunch==true?1:0,
-						'dinner':this.dateTable2[i].lunch==true?1:0
-						
-					}
-					
-					tabledate.push(data)
+					if(this.dateTable2[i].breakfast == true || this.dateTable2[i].lunch == true || this.dateTable2[i].dinner == true){
+						  let data = {
+						   date:this.year + '-' + this.dateTable2[i].date,
+						   breakfast:this.dateTable2[i].breakfast==true?1:0,
+						   lunch:this.dateTable2[i].lunch==true?1:0,
+						   dinner:this.dateTable2[i].lunch==true?1:0
+						   
+						  }
+						  
+						  tabledate.push(data)
+						 }
 					
 				}
 				return tabledate
@@ -240,14 +242,14 @@
 			
 			
 		},
-		watch: {
-			// value2发生改变时重新获取日期
-			value2() {
-				this.getDate1()
-			},
+		// watch: {
+		// 	// value2发生改变时重新获取日期
+		// 	value2() {
+		// 		this.getDate1()
+		// 	},
 
 
-		},
+		// },
 
 		methods: {
 			// getDate(e) {
@@ -326,7 +328,7 @@
 					.add(4, "days")
 					.format("MM-DD");
 					
-					
+				this.arrDate = []
 				//#ifndef H5
 				let url = 'http://localhost:8888/xboot/order/getByStaffIDAndDate'
 				//#endif
@@ -347,6 +349,7 @@
 						if(res.data.code == '200'){
 							for (let i = 0;i<7;i++){
 								if(res.data.result[i]!==null){
+									
 									this.dateTable2[i].breakfast = res.data.result[i].breakfast == 1?true:false
 									this.dateTable2[i].lunch = res.data.result[i].lunch == 1?true:false
 									this.dateTable2[i].dinner = res.data.result[i].dinner == 1?true:false
@@ -362,6 +365,7 @@
 						
 					}
 				})
+				
 					
 
 			},

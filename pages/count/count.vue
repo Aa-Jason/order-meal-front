@@ -56,9 +56,9 @@
 				
 				
 			</view>
-			<button v-if="showSum" style="width: 250rpx;margin-left: 60%;background-color: #0099ff;color: #FFFFFF;margin-bottom: 20rpx;font-size:29rpx;">
+			<!-- <button v-if="showSum" style="width: 250rpx;margin-left: 60%;background-color: #0099ff;color: #FFFFFF;margin-bottom: 20rpx;font-size:29rpx;">
 				导出表格
-			</button>
+			</button> -->
 		</view>
 		
 	</view>

@@ -5,7 +5,7 @@
 			<view class="font-md" >忘记密码</view>
 		</view> -->
 		<view class="p-5" style="margin: 50rpx;">
-			<view class="font-big mb-5" style="font-size: 60rpx;">密码登录</view>
+			<view class="font-big mb-5" focus="auto" style="font-size: 60rpx;">密码登录</view>
 			
 			<input type="text" class="border-bottom mb-4 uni-input px-0"
 			placeholder="请输入手机号" v-model="mobile"
